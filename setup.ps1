@@ -592,7 +592,7 @@ $Global:AdvancedPreset = @(
 
             <StackPanel Grid.Column="0">
                 <TextBlock Text="🚀 Setup Pós-Formatação Windows" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" />
-                <TextBlock Text="236 Aplicativos com Ícones Oficiais • Pack PC Gamer • Otimizações &amp; Tweaks do Sistema" FontSize="13" Foreground="{DynamicResource TextSecondary}" Margin="0,4,0,0" />
+                <TextBlock Text="244 Aplicativos com Ícones Oficiais • Pack PC Gamer • Otimizações &amp; Tweaks do Sistema" FontSize="13" Foreground="{DynamicResource TextSecondary}" Margin="0,4,0,0" />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
@@ -622,7 +622,7 @@ $Global:AdvancedPreset = @(
         <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0" Name="MainTabControl">
             
             <!-- ABA 1: APLICATIVOS -->
-            <TabItem Name="TabItemApps" Header="📦 Aplicativos (236 Softwares)">
+            <TabItem Name="TabItemApps" Header="📦 Aplicativos (244 Softwares)">
                 <Grid Margin="0,16,0,0">
                     <Grid.RowDefinitions>
                         <!-- Barra de Busca e Filtros -->
@@ -1492,7 +1492,7 @@ function Update-SelectionSummary {
 
     # Atualiza cabeçalho das Abas em tempo real
     if ($TabItemApps) {
-        $TabItemApps.Header = if ($appCount -gt 0) { "📦 Aplicativos ($appCount selecionados)" } else { "📦 Aplicativos (236 Softwares)" }
+        $TabItemApps.Header = if ($appCount -gt 0) { "📦 Aplicativos ($appCount selecionados)" } else { "📦 Aplicativos (244 Softwares)" }
     }
     if ($TabItemTweaks) {
         $TabItemTweaks.Header = if ($tweakCount -gt 0) { "⚙️ Ajustes do Windows ($tweakCount selecionados)" } else { "⚙️ Ajustes do Windows (66 Tweaks)" }
