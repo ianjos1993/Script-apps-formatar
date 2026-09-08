@@ -105,6 +105,7 @@ $Global:AdvancedPreset = @(
     Title="Setup Pós-Formatação Windows | Andyz0x"
     Height="830" Width="1180"
     MinHeight="720" MinWidth="980"
+    WindowState="Maximized"
     WindowStartupLocation="CenterScreen"
     Background="{DynamicResource BgWindow}"
     Foreground="{DynamicResource TextPrimary}"
