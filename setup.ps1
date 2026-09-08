@@ -476,6 +476,33 @@ $Global:AdvancedPreset = @(
             </Setter>
         </Style>
 
+        <!-- Botão Discord Sugestões -->
+        <Style x:Key="BtnDiscord" TargetType="Button">
+            <Setter Property="Background" Value="#5865F2" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="BorderBrush" Value="#4752C4" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="BrdDiscord" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BrdDiscord" Property="Background" Value="#4752C4" />
+                                <Setter TargetName="BrdDiscord" Property="BorderBrush" Value="#3C45A5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Botão Popular Filter -->
         <Style x:Key="BtnPopularFilter" TargetType="Button">
             <Setter Property="Background" Value="#451A03" />
@@ -580,6 +607,9 @@ $Global:AdvancedPreset = @(
                         <ComboBoxItem Content="🌲 Esmeralda" />
                     </ComboBox>
                 </StackPanel>
+
+                <!-- Botão Enviar Sugestões / Discord -->
+                <Button Name="BtnDiscordFeedback" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,10,0" ToolTip="Participe do nosso servidor no Discord e envie sugestões: discord.gg/ubnk" />
 
                 <!-- Badge Andyz0x Modo Administrador -->
                 <Border Background="{DynamicResource BadgeBg}" BorderBrush="{DynamicResource BadgeBorder}" BorderThickness="1" CornerRadius="8" Padding="12,6" VerticalAlignment="Center">
@@ -750,6 +780,7 @@ $Global:AdvancedPreset = @(
                     <Grid Grid.Row="0" Margin="0,0,0,8">
                         <TextBlock Text="Terminal em tempo real da execução:" FontSize="13" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Name="BtnDiscordConsole" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,8,0" ToolTip="Envie dúvidas e sugestões no Discord: discord.gg/ubnk" />
                             <Button Name="BtnClearLogs" Content="Limpar Logs" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
                             <Button Name="BtnCopyLogs" Content="Copiar Logs" Style="{StaticResource BtnSecondary}" />
                         </StackPanel>
@@ -811,6 +842,21 @@ $BtnRun = $Global:Window.FindName("BtnRun")
 $BtnClearLogs = $Global:Window.FindName("BtnClearLogs")
 $BtnCopyLogs = $Global:Window.FindName("BtnCopyLogs")
 $CmbThemeSelector = $Global:Window.FindName("CmbThemeSelector")
+
+# Botão de Sugestões / Discord
+$BtnDiscordFeedback = $Global:Window.FindName("BtnDiscordFeedback")
+$BtnDiscordConsole = $Global:Window.FindName("BtnDiscordConsole")
+
+if ($BtnDiscordFeedback) {
+    $BtnDiscordFeedback.Add_Click({
+        Start-Process "https://discord.gg/ubnk"
+    })
+}
+if ($BtnDiscordConsole) {
+    $BtnDiscordConsole.Add_Click({
+        Start-Process "https://discord.gg/ubnk"
+    })
+}
 
 # Botões de Ação Global e Abas
 $BtnUninstallApps = $Global:Window.FindName("BtnUninstallApps")

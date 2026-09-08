@@ -17,6 +17,8 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 > irm https://raw.githubusercontent.com/ianjos1993/Script-apps-formatar/main/setup.ps1 | iex
 > ```
 
+> 💬 **Dúvidas ou Sugestões de novos apps?** Entre no nosso Discord oficial: **[discord.gg/ubnk](https://discord.gg/ubnk)**
+
 ---
 
 Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **244 softwares oficiais** via **WinGet** e instaladores dedicados (como **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer** com seletor de GPU), **5 Temas Visuais Dinâmicos**, botão inteligente de **Mais Populares com Telemetria na Nuvem**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
@@ -161,6 +163,15 @@ Abra a pasta do projeto no PowerShell e execute:
 Set-ExecutionPolicy Bypass -Scope Process -Force
 .\setup.ps1
 ```
+
+---
+
+## 💬 Sugestões & Comunidade no Discord
+
+Tem alguma sugestão de novos softwares para adicionarmos ao catálogo, pedidos de otimizações ou dúvidas?
+Participe da nossa comunidade no Discord e fale diretamente conosco:
+
+👉 **[discord.gg/ubnk](https://discord.gg/ubnk)**
 
 ---
 
