@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Utilitário Completo de Pós-Formatação para Windows (WPF GUI)
     Desenvolvido por Andyz0x.
