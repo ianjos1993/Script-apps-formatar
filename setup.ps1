@@ -1158,7 +1158,7 @@ if ($CmbThemeSelector) {
 # -------------------------------------------------------------------------
 # 6. MONTAGEM DINÂMICA DA ABA DE APLICATIVOS COM ÍCONES E BADGE OPEN SOURCE
 # -------------------------------------------------------------------------
-$appCategories = $Global:AppCatalog | Group-Object Category | Sort-Object Name
+$appCategories = $Global:AppCatalog | Group-Object Category | Sort-Object { [regex]::Replace($_.Name, '^[^\p{L}\p{Nd}]+\s*', '') }
 
 # Preencher ComboBox de Categorias
 $CmbCategoryFilter.Items.Add("[Todas as Categorias]") | Out-Null
