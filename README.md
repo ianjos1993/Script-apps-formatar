@@ -1,4 +1,4 @@
-# 🚀 Script de Pós-Formatação Windows (Kit Andyz0x + Pack PC Gamer) • por Andyz0x
+# 🚀 Script de Pós-Formatação Windows (Kit Andyz0x + Pack PC Gamer) • por Igor Anjos
 
 Um utilitário completo, moderno e em modo escuro (*Dark Mode*) para configurar o Windows e instalar seus aplicativos essenciais logo após formatar a máquina — executável através de uma única linha de comando no PowerShell:
 
