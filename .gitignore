@@ -1,0 +1,14 @@
+# Python / Temp files
+__pycache__/
+*.py[cod]
+*$py.class
+check_antigravity.py
+
+# Windows / OS files
+Thumbs.db
+Desktop.ini
+
+# Backup and temp files
+*.bak
+*.tmp
+*.log
