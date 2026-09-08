@@ -21,7 +21,7 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 
 ---
 
-Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **244 softwares oficiais** via **WinGet** e instaladores dedicados (como **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer** com seletor de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
+Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **246 softwares oficiais** via **WinGet** e instaladores dedicados (como **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **SignalRGB**, **Google Drive**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**, ambos com seletor interativo de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
 
 ---
 
@@ -37,21 +37,26 @@ Alterne o visual da aplicação em tempo real com 1 clique através do seletor `
 
 ---
 
-### 👑 2. Kit Andyz0x (Completo em 1 Clique)
-Preset autoral com a seleção definitiva de 25 ferramentas essenciais para produtividade, desenvolvimento, jogos, utilitários de sistema e mídia:
-- 🌐 **Navegador**: Brave
-- 🎬 **Mídia & Gravação**: VLC Media Player, ShareX (captura e gravação de tela)
+### 👑 2. Kit Andyz0x (Completo em 1 Clique com Seletor de GPU)
+Preset autoral com a seleção definitiva de **30 ferramentas essenciais** para produtividade, desenvolvimento, jogos, utilitários de sistema e mídia — agora com **diálogo inteligente de seleção de GPU (NVIDIA ou AMD)**:
+- 🎮 **Seleção Interativa de GPU**: Pergunta qual GPU o computador utiliza e ativa automaticamente o **NVIDIA App** ou o **AMD Software: Adrenalin Edition** com base na fabricante.
+- 🌐 **Navegador**: Brave Browser
+- 🎬 **Mídia & Gravação**: VLC Media Player, ShareX (captura e gravação de tela rápida)
 - 📝 **Editores & IDEs**: Notepad++, VS Code
 - 💬 **Comunicação & Social**: Discord, WhatsApp Desktop
-- 🕹️ **Jogos & Streaming**: Steam, Epic Games Launcher, Parsec
+- 🕹️ **Jogos & Launchers**: Steam, Epic Games Launcher, Hydra Launcher (launcher gamer open-source com BitTorrent integrado), Parsec
+- 📄 **Documentos & Nuvem**: PDF24 Creator, Google Drive (cliente oficial desktop)
+- 🛠️ **Utilitários & Iluminação**:
+  - NanaZip (descompactador moderno baseado no 7-Zip)
+  - Internet Download Manager (IDM - acelerador de downloads)
+  - Nilesoft Shell (menu de contexto moderno e customizado)
+  - SignalRGB (sincronização e controle universal de iluminação RGB de periféricos e hardware)
 - 💻 **Ambiente Dev & Linguagens**: NodeJS LTS, Git, Python 3
-- 📄 **Documentos**: PDF24 Creator
-- 🛠️ **Utilitários do Sistema**: NanaZip (descompactador moderno), Internet Download Manager (IDM), Nilesoft Shell (menu de contexto customizado)
 - 🔐 **Segurança & Senhas**: Proton Pass
 - 🚗 **Drivers**: Snappy Driver Installer Origin (SDIO)
 - 🧰 **Diagnóstico & Inicialização**: Microsoft Sysinternals AutoRuns
 - 📦 **Runtimes Essenciais**:
-  - Microsoft .NET Desktop Runtimes (6.0, 8.0 e 9.0)
+  - Microsoft .NET Desktop Runtimes (6.0, 8.0, 9.0 e **10.0**)
   - Microsoft Visual C++ 2015–2022 Redistributable (32-bit e 64-bit)
 
 ---
