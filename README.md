@@ -21,21 +21,13 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 
 ---
 
-Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **244 softwares oficiais** via **WinGet** e instaladores dedicados (como **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer** com seletor de GPU), **5 Temas Visuais Dinâmicos**, botão inteligente de **Mais Populares com Telemetria na Nuvem**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
+Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **244 softwares oficiais** via **WinGet** e instaladores dedicados (como **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer** com seletor de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
 
 ---
 
 ## 🌟 Principais Destaques
 
-### ⭐ 1. Botão "Mais Populares" & Telemetria Remota Coletiva
-Ao invés de poluir a tela com menus repetidos, a barra de ferramentas conta com o botão alternador **`⭐ Mais Populares`**:
-- **Ao clicar**: A lista é filtrada instantaneamente para exibir apenas os 24 softwares mais votados e essenciais pós-formatação (Chrome, Steam, Hydra Launcher, 7-Zip, Discord, NVIDIA App, Kaspersky, Spotify, etc.).
-- **Ao clicar novamente**: Restaura a exibição completa de todos os 244 aplicativos.
-- **Telemetria Remota na Nuvem**: O script se conecta de forma ultrarrápida à API do domínio `unbk.com.br`. Ao instalar programas, ele registra votos anônimos em segundo plano, computando os softwares mais populares escolhidos por toda a comunidade de usuários! Se estiver sem internet, usa um catálogo de segurança curado sem qualquer travamento.
-
----
-
-### 🎨 2. Seletor de Temas Visuais (5 Temas Dinâmicos)
+### 🎨 1. Seletor de Temas Visuais (5 Temas Dinâmicos)
 Alterne o visual da aplicação em tempo real com 1 clique através do seletor `🎨 Tema` no cabeçalho:
 1. 🌙 **Escuro (Dark Fluent / Padrão)**: Fundo preto obsidiana (`#0B0D13`), cartões em grafite elegante (`#161922`), acentuação índigo (`#6366F1`) e texto branco nítido.
 2. ☀️ **Claro (Light Fluent / Clean)**: Fundo cinza suave moderníssimo (`#F1F5F9`), cartões brancos puros (`#FFFFFF`), acentuação índigo profundo (`#4F46E5`) e alto contraste.
@@ -45,7 +37,7 @@ Alterne o visual da aplicação em tempo real com 1 clique através do seletor `
 
 ---
 
-### 👑 3. Kit Andyz0x (Completo em 1 Clique)
+### 👑 2. Kit Andyz0x (Completo em 1 Clique)
 Preset autoral com a seleção definitiva de 25 ferramentas essenciais para produtividade, desenvolvimento, jogos, utilitários de sistema e mídia:
 - 🌐 **Navegador**: Brave
 - 🎬 **Mídia & Gravação**: VLC Media Player, ShareX (captura e gravação de tela)
@@ -64,7 +56,7 @@ Preset autoral com a seleção definitiva de 25 ferramentas essenciais para prod
 
 ---
 
-### 🎮 4. Pack PC Gamer (Com Seleção Interativa de GPU)
+### 🎮 3. Pack PC Gamer (Com Seleção Interativa de GPU)
 Ao clicar no preset **`🎮 Pack PC Gamer (Essenciais)`**, uma tela moderna em modo escuro é exibida para você escolher o perfil da sua placa de vídeo:
 - **🟢 Perfil NVIDIA GeForce**:
   - Marca automaticamente o **NVIDIA App** (drivers Game Ready, otimização de jogos e ShadowPlay).
@@ -93,7 +85,7 @@ Ao clicar no preset **`🎮 Pack PC Gamer (Essenciais)`**, uma tela moderna em m
 
 ---
 
-### 🛡️ 5. Antivírus & Ferramentas de Segurança
+### 🛡️ 4. Antivírus & Ferramentas de Segurança
 Para garantir proteção completa imediata após a formatação:
 - 🛡️ **Kaspersky Free / Standard**: Antivírus consagrado com proteção em tempo real, monitor comportamental Inspetor do Sistema e proteção web oficial.
 - 🧰 **Kaspersky Virus Removal Tool (KVRT)**: Scanner portátil oficial para varredura e remoção profunda sem necessidade de instalação.
@@ -103,7 +95,7 @@ Para garantir proteção completa imediata após a formatação:
 
 ---
 
-### 🗑️ 6. Desinstalação de Apps e ↩️ Reversão de Tweaks
+### 🗑️ 5. Desinstalação de Apps e ↩️ Reversão de Tweaks
 Além de instalar e otimizar, o utilitário permite desfazer qualquer ação com total segurança:
 - **🗑️ Desinstalar Aplicativos**: Marque os programas indesejados e clique em `🗑️ Desinstalar Selecionados`. O script executa o `winget uninstall --silent` para cada software.
 - **↩️ Reverter Tweaks**: Marque os ajustes que deseja restaurar e clique em `↩️ Reverter Tweaks`. O script restaura automaticamente as chaves de registro originais do Windows (`OriginalValue`) ou executa os scripts de reversão dedicados (`UndoScript`).

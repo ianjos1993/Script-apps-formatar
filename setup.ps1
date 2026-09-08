@@ -502,29 +502,7 @@ $Global:AdvancedPreset = @(
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!-- Botão Popular Filter -->
-        <Style x:Key="BtnPopularFilter" TargetType="Button">
-            <Setter Property="Background" Value="#451A03" />
-            <Setter Property="Foreground" Value="#FDE68A" />
-            <Setter Property="BorderBrush" Value="#D97706" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Padding" Value="12,6" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Botão Open Source Filter -->
+<!-- Botão Open Source Filter -->
         <Style x:Key="BtnFossFilter" TargetType="Button">
             <Setter Property="Background" Value="#064E3B" />
             <Setter Property="Foreground" Value="#A7F3D0" />
@@ -664,7 +642,6 @@ $Global:AdvancedPreset = @(
                         <Button Name="BtnPresetEssenciais" Content="⭐ Essenciais" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
                         <Button Name="BtnPresetDev" Content="💻 Desenvolvedor" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
                         <Button Name="BtnPresetGamer" Content="🕹️ Apenas Jogos" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnTogglePopularOnly" Content="⭐ Mais Populares" Style="{StaticResource BtnPopularFilter}" Margin="0,0,8,0" />
                         <Button Name="BtnToggleFossOnly" Content="🍃 Apenas Open Source" Style="{StaticResource BtnFossFilter}" Margin="0,0,8,0" />
                         <Button Name="BtnToggleSelectedOnly" Content="🎯 Apenas Selecionados" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
                         <Button Name="BtnSelectAllVisibleApps" Content="Marcar Visíveis" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
@@ -871,7 +848,6 @@ $BtnPresetPackGamer = $Global:Window.FindName("BtnPresetPackGamer")
 $BtnPresetEssenciais = $Global:Window.FindName("BtnPresetEssenciais")
 $BtnPresetDev = $Global:Window.FindName("BtnPresetDev")
 $BtnPresetGamer = $Global:Window.FindName("BtnPresetGamer")
-$BtnTogglePopularOnly = $Global:Window.FindName("BtnTogglePopularOnly")
 $BtnToggleFossOnly = $Global:Window.FindName("BtnToggleFossOnly")
 $BtnToggleSelectedOnly = $Global:Window.FindName("BtnToggleSelectedOnly")
 $BtnSelectAllVisibleApps = $Global:Window.FindName("BtnSelectAllVisibleApps")
@@ -912,30 +888,6 @@ $Global:AppCategoryCards = [System.Collections.Generic.List[PSCustomObject]]::ne
 $Global:IsSyncingSelection = $false
 $Global:FossOnlyActive = $false
 $Global:SelectedOnlyActive = $false
-$Global:PopularOnlyActive = $false
-
-# Lista padrão de mais populares pós-formatação (fallback instantâneo)
-$Global:DefaultPopularKeys = @(
-    "WPFInstallchrome", "WPFInstallbrave", "WPFInstall7zip", "WPFInstallnanazip", "WPFInstallwinrar",
-    "WPFInstalldiscord", "WPFInstallwhatsapp", "WPFInstallspotify", "WPFInstallvlc",
-    "WPFInstallsteam", "WPFInstallepicgames", "WPFInstallHydraLauncher", "WPFInstallNvidiaApp",
-    "WPFInstallExitLag", "WPFInstallmsiafterburner", "WPFInstallnotepadplus", "WPFInstallanydesk",
-    "WPFInstallpdf24creator", "WPFInstallvc2015_64", "WPFInstallvc2015_32",
-    "WPFInstallKaspersky", "WPFInstallMalwarebytes", "WPFInstallAdwCleaner", "WPFInstallBitdefender"
-)
-$Global:PopularKeys = $Global:DefaultPopularKeys
-
-# Tenta carregar lista de popularidade remota via nuvem unbk.com.br (timeout de 1s para fluidez instantânea)
-try {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $remotePop = Invoke-RestMethod -Uri "https://unbk.com.br/api/popular.json" -TimeoutSec 1 -ErrorAction SilentlyContinue
-    if ($remotePop) {
-        $validKeys = @($remotePop | Where-Object { $_ -is [string] -and $_ -like "WPFInstall*" })
-        if ($validKeys.Count -ge 5) {
-            $Global:PopularKeys = $validKeys
-        }
-    }
-} catch {}
 
 # -------------------------------------------------------------------------
 # 5.1 SISTEMA DE TEMAS VISUAIS DINÂMICOS (5 TEMAS)
@@ -1405,9 +1357,8 @@ function Filter-Applications {
 
             $fossMatches = (-not $Global:FossOnlyActive) -or ($entry.Foss -eq $true)
             $selectedMatches = (-not $Global:SelectedOnlyActive) -or ($entry.CheckBox.IsChecked -eq $true)
-            $popularMatches = (-not $Global:PopularOnlyActive) -or ($Global:PopularKeys -contains $entry.Key)
 
-            if ($catMatches -and $appMatches -and $fossMatches -and $selectedMatches -and $popularMatches) {
+            if ($catMatches -and $appMatches -and $fossMatches -and $selectedMatches) {
                 $entry.CheckBox.Visibility = [System.Windows.Visibility]::Visible
                 $hasVisibleAppsInCat = $true
                 $visibleCount++
@@ -1429,19 +1380,6 @@ function Filter-Applications {
 
 $TxtAppSearch.Add_TextChanged({ Filter-Applications })
 $CmbCategoryFilter.Add_SelectionChanged({ Filter-Applications })
-
-# Botão Filtro Rápido Mais Populares
-$BtnTogglePopularOnly.Add_Click({
-    $Global:PopularOnlyActive = -not $Global:PopularOnlyActive
-    if ($Global:PopularOnlyActive) {
-        $BtnTogglePopularOnly.Content = "✔️ Exibindo Mais Populares"
-        $BtnTogglePopularOnly.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#B45309")
-    } else {
-        $BtnTogglePopularOnly.Content = "⭐ Mais Populares"
-        $BtnTogglePopularOnly.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#451A03")
-    }
-    Filter-Applications
-})
 
 # Botão Filtro Rápido Open Source
 $BtnToggleFossOnly.Add_Click({
@@ -2208,21 +2146,6 @@ function Install-SelectedApps {
     }
 
     if ($selectedApps.Count -eq 0) { return }
-
-    # Telemetria assíncrona anônima para computar popularidade coletiva (segundo plano, 0ms de bloqueio)
-    try {
-        $selectedKeysToReport = @($selectedApps | ForEach-Object { $_.Key })
-        if ($selectedKeysToReport.Count -gt 0) {
-            Start-Job -ScriptBlock {
-                param($keys)
-                try {
-                    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-                    $payload = @{ apps = $keys } | ConvertTo-Json
-                    Invoke-RestMethod -Uri "https://unbk.com.br/api/vote.php" -Method Post -Body $payload -ContentType "application/json" -TimeoutSec 3 -ErrorAction SilentlyContinue | Out-Null
-                } catch {}
-            } -ArgumentList (,$selectedKeysToReport) | Out-Null
-        }
-    } catch {}
 
     $wingetCmd = Get-Command winget -ErrorAction SilentlyContinue
     if (-not $wingetCmd) {
