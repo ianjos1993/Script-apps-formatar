@@ -587,7 +587,7 @@ $Global:AdvancedPreset = @(
                 </StackPanel>
 
                 <!-- Botão Enviar Sugestões / Discord -->
-                <Button Name="BtnDiscordFeedback" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,10,0" ToolTip="Participe do nosso servidor no Discord e envie sugestões: discord.gg/ubnk" />
+                <Button Name="BtnDiscordFeedback" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,10,0" ToolTip="Participe do nosso servidor no Discord e envie sugestões: discord.gg/unbk" />
 
                 <!-- Badge Andyz0x Modo Administrador -->
                 <Border Background="{DynamicResource BadgeBg}" BorderBrush="{DynamicResource BadgeBorder}" BorderThickness="1" CornerRadius="8" Padding="12,6" VerticalAlignment="Center">
@@ -757,7 +757,7 @@ $Global:AdvancedPreset = @(
                     <Grid Grid.Row="0" Margin="0,0,0,8">
                         <TextBlock Text="Terminal em tempo real da execução:" FontSize="13" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Name="BtnDiscordConsole" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,8,0" ToolTip="Envie dúvidas e sugestões no Discord: discord.gg/ubnk" />
+                            <Button Name="BtnDiscordConsole" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,8,0" ToolTip="Envie dúvidas e sugestões no Discord: discord.gg/unbk" />
                             <Button Name="BtnClearLogs" Content="Limpar Logs" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
                             <Button Name="BtnCopyLogs" Content="Copiar Logs" Style="{StaticResource BtnSecondary}" />
                         </StackPanel>
@@ -826,12 +826,12 @@ $BtnDiscordConsole = $Global:Window.FindName("BtnDiscordConsole")
 
 if ($BtnDiscordFeedback) {
     $BtnDiscordFeedback.Add_Click({
-        Start-Process "https://discord.gg/ubnk"
+        Start-Process "https://discord.gg/unbk"
     })
 }
 if ($BtnDiscordConsole) {
     $BtnDiscordConsole.Add_Click({
-        Start-Process "https://discord.gg/ubnk"
+        Start-Process "https://discord.gg/unbk"
     })
 }
 

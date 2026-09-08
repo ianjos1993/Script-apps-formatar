@@ -17,7 +17,7 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 > irm https://raw.githubusercontent.com/ianjos1993/Script-apps-formatar/main/setup.ps1 | iex
 > ```
 
-> 💬 **Dúvidas ou Sugestões de novos apps?** Entre no nosso Discord oficial: **[discord.gg/ubnk](https://discord.gg/ubnk)**
+> 💬 **Dúvidas ou Sugestões de novos apps?** Entre no nosso Discord oficial: **[discord.gg/unbk](https://discord.gg/unbk)**
 
 ---
 
@@ -163,7 +163,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 Tem alguma sugestão de novos softwares para adicionarmos ao catálogo, pedidos de otimizações ou dúvidas?
 Participe da nossa comunidade no Discord e fale diretamente conosco:
 
-👉 **[discord.gg/ubnk](https://discord.gg/ubnk)**
+👉 **[discord.gg/unbk](https://discord.gg/unbk)**
 
 ---
 
