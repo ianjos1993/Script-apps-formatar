@@ -10,7 +10,7 @@ irm unbk.com.br/setup | iex
 irm https://raw.githubusercontent.com/ianjos1993/Script-apps-formatar/main/setup.ps1 | iex
 ```
 
-Desenvolvido por **Andyz0x**, reúne um catálogo robusto de **236 softwares oficiais** via **WinGet** e instaladores dedicados (como **Antigravity IDE**, **ExitLag**, **NVIDIA App** e **AMD Software: Adrenalin Edition**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**), suporte a **5 Temas Visuais Dinâmicos** (Escuro, Claro, Cyberpunk, Nord Ártico e Esmeralda), recursos de **Desinstalação de Softwares** e **Reversão de Tweaks**, interface gráfica com **destaque visual instantâneo e evidente** para opções selecionadas e ferramentas de diagnóstico e reparação — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares Open Source (FOSS)**.
+Desenvolvido por **Igor Anjos**, reúne um catálogo robusto de **236 softwares oficiais** via **WinGet** e instaladores dedicados (como **Antigravity IDE**, **ExitLag**, **NVIDIA App** e **AMD Software: Adrenalin Edition**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**), suporte a **5 Temas Visuais Dinâmicos** (Escuro, Claro, Cyberpunk, Nord Ártico e Esmeralda), recursos de **Desinstalação de Softwares** e **Reversão de Tweaks**, interface gráfica com **destaque visual instantâneo e evidente** para opções selecionadas e ferramentas de diagnóstico e reparação — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares Open Source (FOSS)**.
 
 ---
 
@@ -181,4 +181,4 @@ irm tinyurl.com/andyz0x-setup | iex
 
 ---
 
-Desenvolvido por **Andyz0x**.
+Desenvolvido por **Igor Anjos**.
