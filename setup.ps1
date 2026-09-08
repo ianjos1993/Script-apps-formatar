@@ -840,6 +840,8 @@ $BtnLaunchFirewall = $Global:Window.FindName("BtnLaunchFirewall")
 $Global:AppCheckBoxes = @{}
 $Global:TweakCheckBoxes = @{}
 $Global:AppCategoryCards = [System.Collections.Generic.List[PSCustomObject]]::new()
+$Global:IsSyncingSelection = $false
+$Global:TopCheckBoxes = @{}
 $Global:FossOnlyActive = $false
 $Global:SelectedOnlyActive = $false
 
@@ -1230,6 +1232,198 @@ foreach ($cat in $appCategories) {
         AppEntries = $cardAppEntries
     })
 }
+
+# -------------------------------------------------------------------------
+# 6.1 CARD DE DESTAQUE NO TOPO: ⭐ MAIS ESCOLHIDOS / POPULARES (TOP APPS)
+# -------------------------------------------------------------------------
+$popularKeys = @(
+    "WPFInstallchrome", "WPFInstallbrave", "WPFInstall7zip", "WPFInstallnanazip", "WPFInstallwinrar",
+    "WPFInstalldiscord", "WPFInstallwhatsapp", "WPFInstallspotify", "WPFInstallvlc",
+    "WPFInstallsteam", "WPFInstallepicgames", "WPFInstallHydraLauncher", "WPFInstallNvidiaApp",
+    "WPFInstallExitLag", "WPFInstallmsiafterburner", "WPFInstallnotepadplus", "WPFInstallanydesk",
+    "WPFInstallpdf24creator", "WPFInstallvc2015_64", "WPFInstallvc2015_32",
+    "WPFInstallKaspersky", "WPFInstallMalwarebytes", "WPFInstallAdwCleaner", "WPFInstallBitdefender"
+)
+
+$topCard = New-Object System.Windows.Controls.Border
+$topCard.SetResourceReference([System.Windows.Controls.Border]::BackgroundProperty, "BgCard")
+$topCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#F59E0B")
+$topCard.BorderThickness = [System.Windows.Thickness]::new(1.5)
+$topCard.CornerRadius = [System.Windows.CornerRadius]::new(10)
+$topCard.Padding = [System.Windows.Thickness]::new(16, 14, 16, 16)
+$topCard.Margin = [System.Windows.Thickness]::new(0, 0, 0, 18)
+
+$topStack = New-Object System.Windows.Controls.StackPanel
+
+# Cabeçalho Destaque com Título e Badge
+$topHeaderPanel = New-Object System.Windows.Controls.StackPanel
+$topHeaderPanel.Orientation = [System.Windows.Controls.Orientation]::Horizontal
+$topHeaderPanel.Margin = [System.Windows.Thickness]::new(0, 0, 0, 4)
+
+$topCatTitle = New-Object System.Windows.Controls.TextBlock
+$topCatTitle.Text = "⭐ Mais Escolhidos / Populares ($($popularKeys.Count))"
+$topCatTitle.FontSize = 15
+$topCatTitle.FontWeight = [System.Windows.FontWeights]::Bold
+$topCatTitle.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#F59E0B")
+$topHeaderPanel.Children.Add($topCatTitle) | Out-Null
+
+$topBadge = New-Object System.Windows.Controls.Border
+$topBadge.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#78350F")
+$topBadge.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#F59E0B")
+$topBadge.BorderThickness = [System.Windows.Thickness]::new(1)
+$topBadge.CornerRadius = [System.Windows.CornerRadius]::new(4)
+$topBadge.Padding = [System.Windows.Thickness]::new(6, 1, 6, 1)
+$topBadge.Margin = [System.Windows.Thickness]::new(10, 0, 0, 0)
+$topBadge.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+
+$topBadgeText = New-Object System.Windows.Controls.TextBlock
+$topBadgeText.Text = "DESTAQUE"
+$topBadgeText.FontSize = 10
+$topBadgeText.FontWeight = [System.Windows.FontWeights]::Bold
+$topBadgeText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#FDE68A")
+$topBadge.Child = $topBadgeText
+$topHeaderPanel.Children.Add($topBadge) | Out-Null
+
+$topStack.Children.Add($topHeaderPanel) | Out-Null
+
+# Subtítulo explicativo
+$topSubtitle = New-Object System.Windows.Controls.TextBlock
+$topSubtitle.Text = "Softwares essenciais mais solicitados e instalados pós-formatação para seleção imediata."
+$topSubtitle.FontSize = 11
+$topSubtitle.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "TextSecondary")
+$topSubtitle.Margin = [System.Windows.Thickness]::new(0, 0, 0, 12)
+$topStack.Children.Add($topSubtitle) | Out-Null
+
+# WrapPanel com 3 colunas
+$topWrap = New-Object System.Windows.Controls.WrapPanel
+$topCardAppEntries = [System.Collections.Generic.List[PSCustomObject]]::new()
+
+foreach ($pKey in $popularKeys) {
+    if (-not $Global:AppCheckBoxes.ContainsKey($pKey)) { continue }
+    $mainItem = $Global:AppCheckBoxes[$pKey]
+    $app = $mainItem.App
+
+    $chkTop = New-Object System.Windows.Controls.CheckBox
+    $chkTop.Width = 330
+    $chkTop.Margin = [System.Windows.Thickness]::new(0, 4, 10, 6)
+
+    $hPanel = New-Object System.Windows.Controls.StackPanel
+    $hPanel.Orientation = [System.Windows.Controls.Orientation]::Horizontal
+    $hPanel.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+
+    if ($app.IconUrl) {
+        $img = New-Object System.Windows.Controls.Image
+        $img.Width = 16
+        $img.Height = 16
+        $img.Margin = [System.Windows.Thickness]::new(0, 0, 6, 0)
+        $img.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+        $img.Source = $app.IconUrl
+        $hPanel.Children.Add($img) | Out-Null
+    }
+
+    $nameBlock = New-Object System.Windows.Controls.TextBlock
+    $nameBlock.Text = $app.Name
+    $nameBlock.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+    $hPanel.Children.Add($nameBlock) | Out-Null
+
+    if ($app.Foss) {
+        $badge = New-Object System.Windows.Controls.Border
+        $badge.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#064E3B")
+        $badge.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#059669")
+        $badge.BorderThickness = [System.Windows.Thickness]::new(1)
+        $badge.CornerRadius = [System.Windows.CornerRadius]::new(4)
+        $badge.Padding = [System.Windows.Thickness]::new(5, 1, 5, 1)
+        $badge.Margin = [System.Windows.Thickness]::new(6, 0, 0, 0)
+        $badge.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+        $badge.ToolTip = "Software Livre e de Código Aberto (Open Source / FOSS)"
+
+        $badgeText = New-Object System.Windows.Controls.TextBlock
+        $badgeText.Text = "🍃 Open Source"
+        $badgeText.FontSize = 10
+        $badgeText.FontWeight = [System.Windows.FontWeights]::SemiBold
+        $badgeText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
+        $badge.Child = $badgeText
+
+        $hPanel.Children.Add($badge) | Out-Null
+    }
+
+    $chkTop.Content = $hPanel
+    $chkTop.ToolTip = $mainItem.CheckBox.ToolTip
+    $chkTop.IsChecked = $mainItem.CheckBox.IsChecked
+
+    $targetKey = $pKey
+    $Global:TopCheckBoxes[$targetKey] = $chkTop
+
+    # Sincronização bidirecional robusta via GetNewClosure
+    $chkTop.Add_Checked({
+        if (-not $Global:IsSyncingSelection) {
+            $Global:IsSyncingSelection = $true
+            if ($Global:AppCheckBoxes.ContainsKey($targetKey)) {
+                $Global:AppCheckBoxes[$targetKey].CheckBox.IsChecked = $true
+            }
+            $Global:IsSyncingSelection = $false
+            Update-SelectionSummary
+        }
+    }.GetNewClosure())
+
+    $chkTop.Add_Unchecked({
+        if (-not $Global:IsSyncingSelection) {
+            $Global:IsSyncingSelection = $true
+            if ($Global:AppCheckBoxes.ContainsKey($targetKey)) {
+                $Global:AppCheckBoxes[$targetKey].CheckBox.IsChecked = $false
+            }
+            $Global:IsSyncingSelection = $false
+            Update-SelectionSummary
+        }
+    }.GetNewClosure())
+
+    $mainItem.CheckBox.Add_Checked({
+        if (-not $Global:IsSyncingSelection) {
+            $Global:IsSyncingSelection = $true
+            if ($Global:TopCheckBoxes.ContainsKey($targetKey)) {
+                $Global:TopCheckBoxes[$targetKey].IsChecked = $true
+            }
+            $Global:IsSyncingSelection = $false
+        }
+    }.GetNewClosure())
+
+    $mainItem.CheckBox.Add_Unchecked({
+        if (-not $Global:IsSyncingSelection) {
+            $Global:IsSyncingSelection = $true
+            if ($Global:TopCheckBoxes.ContainsKey($targetKey)) {
+                $Global:TopCheckBoxes[$targetKey].IsChecked = $false
+            }
+            $Global:IsSyncingSelection = $false
+        }
+    }.GetNewClosure())
+
+    $topCardAppEntries.Add([PSCustomObject]@{
+        CheckBox = $chkTop
+        Name = $app.Name
+        Id = $app.Id
+        Foss = $app.Foss
+        Description = $app.Description
+    })
+
+    $topWrap.Children.Add($chkTop) | Out-Null
+}
+
+$topStack.Children.Add($topWrap) | Out-Null
+$topCard.Child = $topStack
+
+# Insere no topo absoluto da UI de Aplicativos
+$AppsContainer.Children.Insert(0, $topCard) | Out-Null
+
+# Insere como primeiro grupo de categorias para o filtro
+$Global:AppCategoryCards.Insert(0, [PSCustomObject]@{
+    Border = $topCard
+    TitleBlock = $topCatTitle
+    CategoryName = "⭐ Mais Escolhidos / Populares"
+    AppEntries = $topCardAppEntries
+})
+
+# Adiciona ao ComboBox de Categorias logo após "[Todas as Categorias]"
+$CmbCategoryFilter.Items.Insert(1, "⭐ Mais Escolhidos / Populares") | Out-Null
 
 # -------------------------------------------------------------------------
 # 7. MONTAGEM DINÂMICA DA ABA DE TWEAKS TOTALMENTE TRADUZIDA (66 TWEAKS)
