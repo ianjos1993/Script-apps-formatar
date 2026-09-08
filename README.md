@@ -107,16 +107,24 @@ Além de instalar e otimizar, o utilitário permite desfazer qualquer ação com
 
 ---
 
-## 📦 Visão Geral do Catálogo (244 Softwares)
+### 🛠️ 6. Auto-Reparo e Reinstalação do WinGet (App Installer)
+Caso o computador recém-formatado ou uma ISO personalizada do Windows esteja com o **WinGet corrompido, desregistrado ou ausente**, o utilitário conta com proteção dupla:
+1. **Verificação Automática no Botão de Instalar**: Ao clicar em `🚀 Instalar / Aplicar`, o script testa a integridade do WinGet. Se detectar qualquer falha, ele repara automaticamente o ambiente em segundo plano (re-registra pacotes, baixa dependências oficiais `VCLibs` e `UI.Xaml`, reinstala o bundle `DesktopAppInstaller` via `aka.ms/getwinget` e redefine fontes) e **segue a instalação dos programas normalmente**.
+2. **Botão Dedicado `🛠️ Reparar WinGet`**: Posicionado diretamente na barra de ações rápidas da tela inicial e na aba de Ferramentas de Manutenção para reparo manual a qualquer momento em 1 clique.
+
+---
+
+## 📦 Visão Geral do Catálogo (246 Softwares)
 
 - 🌐 **Navegadores**: Brave, Chrome, Firefox, Edge, Opera, Opera GX, Tor, Vivaldi, LibreWolf, Floorp, Waterfox, Zen Browser, Chromium.
 - 💬 **Comunicação**: Discord, Telegram, WhatsApp, Slack, Teams, Signal, Zoom, Skype, Thunderbird, BetterDiscord, Vencord, Element.
 - 💻 **Desenvolvimento**: VS Code, Visual Studio Community, Git, GitHub Desktop, GitKraken, Docker Desktop, Node.js (LTS & Current), Python 3, Go, Rust, Java JDK, PyCharm, IntelliJ IDEA, Android Studio, Neovim, Windows Terminal, Postman, Insomnia, DBeaver, Zed.
-- 📄 **Documentos & Escritório**: LibreOffice, Adobe Acrobat Reader, SumatraPDF, ONLYOFFICE, Obsidian, Notion, Logseq, Calibre, Zotero, PDF24 Creator.
+- 📄 **Documentos & Escritório**: Google Drive, LibreOffice, Adobe Acrobat Reader, SumatraPDF, ONLYOFFICE, Obsidian, Notion, Logseq, Calibre, Zotero, PDF24 Creator.
 - 🎮 **Jogos & Launchers**: **Hydra Launcher**, **ExitLag**, **NVIDIA App**, **AMD Software: Adrenalin Edition**, Steam, Epic Games Launcher, EA App, Ubisoft Connect, GOG Galaxy, Battle.net, Prism Launcher, Modrinth, Moonlight, Parsec, RetroArch, Heroic Games Launcher.
 - 🎨 **Multimídia & Design**: Spotify Music, VLC Media Player, OBS Studio, HandBrake, Audacity, Blender, GIMP, Paint.NET, K-Lite Mega Codec Pack, DaVinci Resolve, Foobar2000, Shotcut, Kdenlive, LosslessCut.
 - 🧰 **Ferramentas Microsoft**: PowerToys, Windows Terminal, Sysinternals Suite, AutoRuns, Process Explorer, Visual C++ Redistributables (AIO), DirectX End-User Runtime.
-- 🛠️ **Utilitários do Sistema**: NanaZip, 7-Zip, WinRAR, PeaZip, Notepad++, ShareX, Lightshot, FlameShot, AnyDesk, TeamViewer, RustDesk, Rufus, BalenaEtcher, Ventoy, CPU-Z, GPU-Z, HWMonitor, CrystalDiskInfo, CrystalDiskMark, TreeSize Free, BleachBit, Everything, Revo Uninstaller, AutoHotkey, WizTree.
+- 🛠️ **Utilitários do Sistema**: **SignalRGB**, NanaZip, 7-Zip, WinRAR, PeaZip, Notepad++, ShareX, Lightshot, FlameShot, AnyDesk, TeamViewer, RustDesk, Rufus, BalenaEtcher, Ventoy, CPU-Z, GPU-Z, HWMonitor, CrystalDiskInfo, CrystalDiskMark, TreeSize Free, BleachBit, Everything, Revo Uninstaller, AutoHotkey, WizTree.
+
 - ⚡ **Ferramentas Pro & Redes**: Wireshark, Nmap, Putty, WinSCP, FileZilla, Advanced IP Scanner, Process Hacker, gsudo, NVCleanstall, MSI Afterburner.
 - ☁️ **Ferramentas Self-Hosted**: Tailscale, Cloudflare WARP, ZeroTier, LocalSend, Kodi, Jellyfin.
 

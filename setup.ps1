@@ -635,19 +635,20 @@ $Global:AdvancedPreset = @(
                     </Grid>
 
                     <!-- Presets Rápidos de Apps -->
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,14">
-                        <TextBlock Text="Presets Rápidos:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource TextSecondary}" FontSize="12" />
-                        <Button Name="BtnPresetKitAndyz0x" Content="👑 Kit Andyz0x (Completo)" Style="{StaticResource BtnKitAndyz0x}" Margin="0,0,8,0" />
-                        <Button Name="BtnPresetPackGamer" Content="🎮 Pack PC Gamer (Essenciais)" Style="{StaticResource BtnGamerPack}" Margin="0,0,8,0" />
-                        <Button Name="BtnPresetEssenciais" Content="⭐ Essenciais" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnPresetDev" Content="💻 Desenvolvedor" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnPresetGamer" Content="🕹️ Apenas Jogos" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnToggleFossOnly" Content="🍃 Apenas Open Source" Style="{StaticResource BtnFossFilter}" Margin="0,0,8,0" />
-                        <Button Name="BtnToggleSelectedOnly" Content="🎯 Apenas Selecionados" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnSelectAllVisibleApps" Content="Marcar Visíveis" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnDeselectAllApps" Content="Desmarcar Todos" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
-                        <Button Name="BtnUninstallAppsTab" Content="🗑️ Desinstalar Selecionados" Style="{StaticResource BtnDanger}" />
-                    </StackPanel>
+                    <WrapPanel Grid.Row="1" Margin="0,0,0,10">
+                        <TextBlock Text="Presets Rápidos:" VerticalAlignment="Center" Margin="0,0,10,6" Foreground="{DynamicResource TextSecondary}" FontSize="12" />
+                        <Button Name="BtnPresetKitAndyz0x" Content="👑 Kit Andyz0x (Completo)" Style="{StaticResource BtnKitAndyz0x}" Margin="0,0,8,6" />
+                        <Button Name="BtnPresetPackGamer" Content="🎮 Pack PC Gamer (Essenciais)" Style="{StaticResource BtnGamerPack}" Margin="0,0,8,6" />
+                        <Button Name="BtnPresetEssenciais" Content="⭐ Essenciais" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
+                        <Button Name="BtnPresetDev" Content="💻 Desenvolvedor" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
+                        <Button Name="BtnPresetGamer" Content="🕹️ Apenas Jogos" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
+                        <Button Name="BtnToggleFossOnly" Content="🍃 Apenas Open Source" Style="{StaticResource BtnFossFilter}" Margin="0,0,8,6" />
+                        <Button Name="BtnToggleSelectedOnly" Content="🎯 Apenas Selecionados" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
+                        <Button Name="BtnSelectAllVisibleApps" Content="Marcar Visíveis" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
+                        <Button Name="BtnDeselectAllApps" Content="Desmarcar Todos" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
+                        <Button Name="BtnUninstallAppsTab" Content="🗑️ Desinstalar Selecionados" Style="{StaticResource BtnDanger}" Margin="0,0,8,6" ToolTip="Desinstala os aplicativos selecionados via WinGet" />
+                        <Button Name="BtnRepairWinGetTab" Content="🛠️ Reparar WinGet" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" ToolTip="Diagnostica, re-registra e reinstala o WinGet (App Installer) da Microsoft caso downloads falhem" />
+                    </WrapPanel>
 
                     <!-- Conteúdo com Scroll -->
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
@@ -716,6 +717,7 @@ $Global:AdvancedPreset = @(
                                 <TextBlock Text="Execução de rotinas recomendadas para resolver instabilidades no sistema:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
 
                                 <WrapPanel>
+                                    <Button Name="BtnActionRepairWinGet" Content="📦 Reinstalar / Reparar WinGet (App Installer)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" ToolTip="Re-registra o App Installer e baixa o pacote oficial mais recente do WinGet da Microsoft" />
                                     <Button Name="BtnActionSfcDism" Content="🔍 Verificação SFC &amp; DISM (Corrigir Erros de Sistema)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
                                     <Button Name="BtnActionResetNetwork" Content="🌐 Redefinir Rede &amp; Limpar DNS" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
                                     <Button Name="BtnActionResetWindowsUpdate" Content="🔄 Redefinir Componentes do Windows Update" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
@@ -839,6 +841,8 @@ if ($BtnDiscordConsole) {
 $BtnUninstallApps = $Global:Window.FindName("BtnUninstallApps")
 $BtnRevertTweaks = $Global:Window.FindName("BtnRevertTweaks")
 $BtnUninstallAppsTab = $Global:Window.FindName("BtnUninstallAppsTab")
+$BtnRepairWinGetTab = $Global:Window.FindName("BtnRepairWinGetTab")
+$BtnActionRepairWinGet = $Global:Window.FindName("BtnActionRepairWinGet")
 $BtnRevertTweaksTab = $Global:Window.FindName("BtnRevertTweaksTab")
 $BtnSelectAllTweaks = $Global:Window.FindName("BtnSelectAllTweaks")
 
@@ -2070,6 +2074,40 @@ $BtnActionCleanDisk.Add_Click({
     Start-Process "cleanmgr.exe" -ArgumentList "/d C:"
 })
 
+if ($BtnRepairWinGetTab) {
+    $BtnRepairWinGetTab.Add_Click({
+        $MainTabControl.SelectedIndex = 3
+        $BtnRepairWinGetTab.IsEnabled = $false
+        try {
+            $res = Repair-WinGet
+            if ($res) {
+                [System.Windows.MessageBox]::Show("O WinGet foi diagnosticado, reparado e está pronto para uso!", "WinGet Reparado", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+            } else {
+                [System.Windows.MessageBox]::Show("A rotina de reparo foi concluída com avisos.`n`nCaso ainda tenha dificuldades para baixar pacotes, abra a Microsoft Store e atualize o 'Instalador de Aplicativos'.", "Diagnóstico Concluído", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+            }
+        } finally {
+            $BtnRepairWinGetTab.IsEnabled = $true
+        }
+    })
+}
+
+if ($BtnActionRepairWinGet) {
+    $BtnActionRepairWinGet.Add_Click({
+        $MainTabControl.SelectedIndex = 3
+        $BtnActionRepairWinGet.IsEnabled = $false
+        try {
+            $res = Repair-WinGet
+            if ($res) {
+                [System.Windows.MessageBox]::Show("O WinGet foi diagnosticado, reparado e está pronto para uso!", "WinGet Reparado", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+            } else {
+                [System.Windows.MessageBox]::Show("A rotina de reparo foi concluída com avisos.`n`nCaso ainda tenha dificuldades para baixar pacotes, abra a Microsoft Store e atualize o 'Instalador de Aplicativos'.", "Diagnóstico Concluído", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+            }
+        } finally {
+            $BtnActionRepairWinGet.IsEnabled = $true
+        }
+    })
+}
+
 # -------------------------------------------------------------------------
 # 12. MOTOR DE EXECUÇÃO: TWEAKS, RECURSOS E WINGET
 # -------------------------------------------------------------------------
@@ -2178,6 +2216,156 @@ function Apply-SelectedFeatures {
     }
 }
 
+function Test-WinGetFunctional {
+    $winAppsPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+    if (Test-Path "$winAppsPath\winget.exe") {
+        if ($env:Path -notlike "*$winAppsPath*") {
+            $env:Path = "$winAppsPath;$env:Path"
+        }
+    }
+
+    $cmd = Get-Command winget -ErrorAction SilentlyContinue
+    if (-not $cmd) { return $false }
+
+    try {
+        $p = Start-Process winget -ArgumentList "--version" -NoNewWindow -PassThru -Wait
+        return ($p.ExitCode -eq 0)
+    } catch {
+        return $false
+    }
+}
+
+function Repair-WinGet {
+    [CmdletBinding()]
+    param()
+
+    Write-GuiLog "=================================================" "INFO"
+    Write-GuiLog "INICIANDO ROTINA DE REPARO E REINSTALAÇÃO DO WINGET..." "INFO"
+    Write-GuiLog "=================================================" "INFO"
+    Set-GuiStatus "Reparando WinGet..." 15
+    Pump-GuiEvents
+
+    # Passo 1: Ajustar variáveis de ambiente PATH
+    $winAppsPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+    if ($env:Path -notlike "*$winAppsPath*") {
+        $env:Path = "$winAppsPath;$env:Path"
+    }
+
+    # Passo 2: Re-registrar DesktopAppInstaller nativo
+    Write-GuiLog "[1/4] Re-registrando pacote DesktopAppInstaller no Windows..." "INFO"
+    Set-GuiStatus "Re-registrando pacotes do Windows..." 30
+    Pump-GuiEvents
+    try {
+        $pkgs = Get-AppxPackage -AllUsers *DesktopAppInstaller* -ErrorAction SilentlyContinue
+        if ($pkgs) {
+            foreach ($pkg in $pkgs) {
+                $manifest = "$($pkg.InstallLocation)\AppXManifest.xml"
+                if (Test-Path $manifest) {
+                    Add-AppxPackage -DisableDevelopmentMode -Register $manifest -ErrorAction SilentlyContinue
+                }
+            }
+        } else {
+            Add-AppxPackage -RegisterByFamilyName -MainPackage "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe" -ErrorAction SilentlyContinue
+        }
+    } catch {
+        Write-GuiLog "Aviso ao registrar pacote nativo: $_" "WARN"
+    }
+
+    if (Test-WinGetFunctional) {
+        try { Start-Process winget -ArgumentList "source reset --force" -NoNewWindow -Wait -ErrorAction SilentlyContinue } catch {}
+        Write-GuiLog "✔️ WinGet re-registrado e pronto para uso!" "SUCCESS"
+        Set-GuiStatus "WinGet Operacional" 100
+        return $true
+    }
+
+    # Passo 3: Baixar e registrar dependências essenciais (VCLibs e UI.Xaml)
+    Write-GuiLog "[2/4] Verificando dependências oficiais (VCLibs e Microsoft.UI.Xaml)..." "INFO"
+    Set-GuiStatus "Baixando dependências..." 50
+    Pump-GuiEvents
+    $tempDir = "$env:TEMP\WinGetRepair"
+    if (-not (Test-Path $tempDir)) { New-Item -ItemType Directory -Path $tempDir -Force | Out-Null }
+
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
+        $vclibsUrl = "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx"
+        $vclibsFile = "$tempDir\VCLibs.appx"
+        if (-not (Test-Path $vclibsFile)) {
+            Invoke-WebRequest -Uri $vclibsUrl -OutFile $vclibsFile -UseBasicParsing -TimeoutSec 30
+        }
+        Add-AppxPackage -Path $vclibsFile -ErrorAction SilentlyContinue
+    } catch {}
+
+    try {
+        $xamlUrl = "https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.8.6/Microsoft.UI.Xaml.2.8.x64.appx"
+        $xamlFile = "$tempDir\UI.Xaml.appx"
+        if (-not (Test-Path $xamlFile)) {
+            Invoke-WebRequest -Uri $xamlUrl -OutFile $xamlFile -UseBasicParsing -TimeoutSec 30
+        }
+        Add-AppxPackage -Path $xamlFile -ErrorAction SilentlyContinue
+    } catch {}
+
+    # Passo 4: Baixar e Instalar o pacote oficial DesktopAppInstaller (.msixbundle)
+    Write-GuiLog "[3/4] Baixando instalador oficial mais recente do WinGet (aka.ms/getwinget)..." "INFO"
+    Set-GuiStatus "Baixando WinGet Bundle..." 75
+    Pump-GuiEvents
+    $bundleFile = "$tempDir\Microsoft.DesktopAppInstaller.msixbundle"
+
+    $downloadSuccess = $false
+    try {
+        Invoke-WebRequest -Uri "https://aka.ms/getwinget" -OutFile $bundleFile -UseBasicParsing -TimeoutSec 60
+        $downloadSuccess = (Test-Path $bundleFile) -and ((Get-Item $bundleFile).Length -gt 1000000)
+    } catch {
+        Write-GuiLog "Aviso no download direto aka.ms: $_" "WARN"
+    }
+
+    if (-not $downloadSuccess) {
+        try {
+            Write-GuiLog "Tentando download alternativo via GitHub Releases oficial..." "INFO"
+            $gitRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/microsoft/winget-cli/releases/latest" -UseBasicParsing -TimeoutSec 15
+            $asset = $gitRelease.assets | Where-Object { $_.name -like "*.msixbundle" } | Select-Object -First 1
+            if ($asset -and $asset.browser_download_url) {
+                Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $bundleFile -UseBasicParsing -TimeoutSec 60
+                $downloadSuccess = $true
+            }
+        } catch {
+            Write-GuiLog "Aviso no fallback GitHub: $_" "WARN"
+        }
+    }
+
+    if ($downloadSuccess) {
+        Write-GuiLog "[4/4] Instalando pacote msixbundle do WinGet..." "INFO"
+        Set-GuiStatus "Instalando pacote WinGet..." 90
+        Pump-GuiEvents
+        try {
+            Add-AppxPackage -Path $bundleFile -ForceApplicationShutdown -ErrorAction Stop
+        } catch {
+            Write-GuiLog "Erro ao instalar msixbundle: $_" "WARN"
+        }
+    }
+
+    # Atualiza PATH
+    $env:Path = "$winAppsPath;$env:Path"
+
+    # Reset de fontes
+    try {
+        Start-Process winget -ArgumentList "source reset --force" -NoNewWindow -Wait -ErrorAction SilentlyContinue
+    } catch {}
+
+    # Validação final
+    if (Test-WinGetFunctional) {
+        Write-GuiLog "=================================================" "SUCCESS"
+        Write-GuiLog "✔️ WINGET REPARADO COM SUCESSO E PRONTO PARA USO!" "SUCCESS"
+        Write-GuiLog "=================================================" "SUCCESS"
+        Set-GuiStatus "WinGet Reparado com Sucesso" 100
+        return $true
+    } else {
+        Write-GuiLog "⚠️ Reparo finalizado, mas o WinGet ainda não respondeu ao comando." "WARN"
+        Write-GuiLog "Dica: Você pode abrir a Microsoft Store e atualizar o 'Instalador de Aplicativos'." "INFO"
+        Set-GuiStatus "Reparo Concluído com Avisos" 0
+        return $false
+    }
+}
+
 function Install-SelectedApps {
     $windowsAppsPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
     if (Test-Path $windowsAppsPath) {
@@ -2195,11 +2383,19 @@ function Install-SelectedApps {
 
     if ($selectedApps.Count -eq 0) { return }
 
-    $wingetCmd = Get-Command winget -ErrorAction SilentlyContinue
-    if (-not $wingetCmd) {
-        Write-GuiLog "ERRO CRÍTICO: WinGet não foi detectado no sistema." "ERROR"
-        Write-GuiLog "Atualize o 'Instalador de Aplicativos' na Microsoft Store e tente novamente." "WARN"
-        return
+    # Verificação inteligente de integridade do WinGet
+    $requiresWinget = ($selectedApps | Where-Object { -not $_.DownloadUrl }).Count -gt 0
+    if ($requiresWinget) {
+        if (-not (Test-WinGetFunctional)) {
+            Write-GuiLog "⚠️ WinGet não detectado ou inoperante. Iniciando rotina de reparo automático..." "WARN"
+            $repaired = Repair-WinGet
+            if (-not $repaired) {
+                Write-GuiLog "ERRO CRÍTICO: Não foi possível inicializar o WinGet automaticamente." "ERROR"
+                Write-GuiLog "Dica: Atualize o 'Instalador de Aplicativos' na Microsoft Store ou clique em '🛠️ Reparar WinGet'." "WARN"
+                [System.Windows.MessageBox]::Show("O WinGet (Gerenciador de Pacotes do Windows) está ausente ou corrompido e não pôde ser reparado automaticamente.`n`nPor favor, atualize o 'Instalador de Aplicativos' na Microsoft Store e tente novamente.", "WinGet Necessário", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+                return
+            }
+        }
     }
 
     $total = $selectedApps.Count
@@ -2276,6 +2472,15 @@ function Uninstall-SelectedApps {
     if ($selectedApps.Count -eq 0) {
         [System.Windows.MessageBox]::Show("Nenhum aplicativo foi selecionado para desinstalação.`nPor favor, marque os aplicativos que deseja desinstalar na aba 'Aplicativos'.", "Nenhuma Seleção", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
         return
+    }
+
+    if (-not (Test-WinGetFunctional)) {
+        Write-GuiLog "⚠️ WinGet inoperante para desinstalação. Acionando reparo automático..." "WARN"
+        $repaired = Repair-WinGet
+        if (-not $repaired) {
+            Write-GuiLog "ERRO CRÍTICO: Não foi possível inicializar o WinGet para desinstalar os aplicativos." "ERROR"
+            return
+        }
     }
 
     $appNames = ($selectedApps | ForEach-Object { " • " + $_.Name }) -join "`n"
