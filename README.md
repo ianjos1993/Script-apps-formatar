@@ -21,7 +21,7 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 
 ---
 
-Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **246 softwares oficiais** via **WinGet** e instaladores dedicados (como **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **SignalRGB**, **Google Drive**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**, ambos com seletor interativo de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
+Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **247 softwares oficiais** via **WinGet** e instaladores dedicados (como **Amazon Games**, **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **SignalRGB**, **Google Drive**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**, ambos com seletor interativo de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
 
 ---
 
@@ -114,13 +114,13 @@ Caso o computador recém-formatado ou uma ISO personalizada do Windows esteja co
 
 ---
 
-## 📦 Visão Geral do Catálogo (246 Softwares)
+## 📦 Visão Geral do Catálogo (247 Softwares)
 
 - 🌐 **Navegadores**: Brave, Chrome, Firefox, Edge, Opera, Opera GX, Tor, Vivaldi, LibreWolf, Floorp, Waterfox, Zen Browser, Chromium.
 - 💬 **Comunicação**: Discord, Telegram, WhatsApp, Slack, Teams, Signal, Zoom, Skype, Thunderbird, BetterDiscord, Vencord, Element.
 - 💻 **Desenvolvimento**: VS Code, Visual Studio Community, Git, GitHub Desktop, GitKraken, Docker Desktop, Node.js (LTS & Current), Python 3, Go, Rust, Java JDK, PyCharm, IntelliJ IDEA, Android Studio, Neovim, Windows Terminal, Postman, Insomnia, DBeaver, Zed.
 - 📄 **Documentos & Escritório**: Google Drive, LibreOffice, Adobe Acrobat Reader, SumatraPDF, ONLYOFFICE, Obsidian, Notion, Logseq, Calibre, Zotero, PDF24 Creator.
-- 🎮 **Jogos & Launchers**: **Hydra Launcher**, **ExitLag**, **NVIDIA App**, **AMD Software: Adrenalin Edition**, Steam, Epic Games Launcher, EA App, Ubisoft Connect, GOG Galaxy, Battle.net, Prism Launcher, Modrinth, Moonlight, Parsec, RetroArch, Heroic Games Launcher.
+- 🎮 **Jogos & Launchers**: **Amazon Games**, **Hydra Launcher**, **ExitLag**, **NVIDIA App**, **AMD Software: Adrenalin Edition**, Steam, Epic Games Launcher, EA App, Ubisoft Connect, GOG Galaxy, Battle.net, Prism Launcher, Modrinth, Moonlight, Parsec, RetroArch, Heroic Games Launcher.
 - 🎨 **Multimídia & Design**: Spotify Music, VLC Media Player, OBS Studio, HandBrake, Audacity, Blender, GIMP, Paint.NET, K-Lite Mega Codec Pack, DaVinci Resolve, Foobar2000, Shotcut, Kdenlive, LosslessCut.
 - 🧰 **Ferramentas Microsoft**: PowerToys, Windows Terminal, Sysinternals Suite, AutoRuns, Process Explorer, Visual C++ Redistributables (AIO), DirectX End-User Runtime.
 - 🛠️ **Utilitários do Sistema**: **SignalRGB**, NanaZip, 7-Zip, WinRAR, PeaZip, Notepad++, ShareX, Lightshot, FlameShot, AnyDesk, TeamViewer, RustDesk, Rufus, BalenaEtcher, Ventoy, CPU-Z, GPU-Z, HWMonitor, CrystalDiskInfo, CrystalDiskMark, TreeSize Free, BleachBit, Everything, Revo Uninstaller, AutoHotkey, WizTree.
