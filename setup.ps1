@@ -819,6 +819,7 @@ $Global:AdvancedPreset = @(
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Name="BtnCoffeeFooter" Content="☕ Considere Apoiar" Style="{StaticResource BtnCoffee}" Margin="0,0,10,0" ToolTip="Considere apoiar o nosso projeto no Buy Me a Coffee: https://buymeacoffee.com/ianjos1993" />
                     <Button Name="BtnUninstallApps" Content="🗑️ Desinstalar Apps" Style="{StaticResource BtnDanger}" Margin="0,0,10,0" ToolTip="Desinstala os aplicativos selecionados via WinGet" />
                     <Button Name="BtnRevertTweaks" Content="↩️ Reverter Tweaks" Style="{StaticResource BtnWarning}" Margin="0,0,10,0" ToolTip="Restaura os ajustes selecionados para os padrões originais do Windows" />
                     <Button Name="BtnRun" Content="🚀 Instalar / Aplicar" Style="{StaticResource BtnPrimary}" ToolTip="Instala os aplicativos e aplica os tweaks selecionados" />
@@ -857,6 +858,7 @@ $CmbThemeSelector = $Global:Window.FindName("CmbThemeSelector")
 # Botões de Suporte / Buy Me a Coffee e Discord
 $BtnBuyMeACoffee = $Global:Window.FindName("BtnBuyMeACoffee")
 $BtnCoffeeConsole = $Global:Window.FindName("BtnCoffeeConsole")
+$BtnCoffeeFooter = $Global:Window.FindName("BtnCoffeeFooter")
 $BtnDiscordFeedback = $Global:Window.FindName("BtnDiscordFeedback")
 $BtnDiscordConsole = $Global:Window.FindName("BtnDiscordConsole")
 
@@ -867,6 +869,11 @@ if ($BtnBuyMeACoffee) {
 }
 if ($BtnCoffeeConsole) {
     $BtnCoffeeConsole.Add_Click({
+        Start-Process "https://buymeacoffee.com/ianjos1993"
+    })
+}
+if ($BtnCoffeeFooter) {
+    $BtnCoffeeFooter.Add_Click({
         Start-Process "https://buymeacoffee.com/ianjos1993"
     })
 }
