@@ -35,8 +35,8 @@ Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de *
 
 ### 🎨 1. Seletor de Temas Visuais (5 Temas Dinâmicos)
 Alterne o visual da aplicação em tempo real com 1 clique através do seletor `🎨 Tema` no cabeçalho:
-1. 🌙 **Escuro (Dark Fluent / Padrão)**: Fundo preto obsidiana (`#0B0D13`), cartões em grafite elegante (`#161922`), acentuação índigo (`#6366F1`) e texto branco nítido.
-2. ☀️ **Claro (Light Fluent / Clean)**: Fundo cinza suave moderníssimo (`#F1F5F9`), cartões brancos puros (`#FFFFFF`), acentuação índigo profundo (`#4F46E5`) e alto contraste.
+1. ☀️ **Claro (Light Fluent / Clean - Padrão)**: Fundo cinza suave moderníssimo (`#F1F5F9`), cartões brancos puros (`#FFFFFF`), acentuação índigo profundo (`#4F46E5`) e alto contraste.
+2. 🌙 **Escuro (Dark Fluent)**: Fundo preto obsidiana (`#0B0D13`), cartões em grafite elegante (`#161922`), acentuação índigo (`#6366F1`) e texto branco nítido.
 3. 🌌 **Cyberpunk (Synthwave / Neon)**: Fundo violeta escuro (`#0B0813`), iluminação neon magenta/fúcsia (`#D946EF`), detalhes roxos elétricos e console rosa neon.
 4. ❄️ **Nórdico Ártico (Polar Blue / Glacier Slate)**: Inspirado no padrão Nord, com fundo azul polar profundo (`#0F1724`), acentos em azul celeste glaciar (`#38BDF8`) e texto branco gélido.
 5. 🌲 **Esmeralda (Matrix Obsidian / Menta)**: Fundo verde obsidiana profundo (`#06120C`), cartões verdes escuros (`#0E2118`), acentuação verde esmeralda luminosa (`#10B981`) e detalhes menta.

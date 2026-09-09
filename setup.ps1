@@ -113,42 +113,42 @@ $Global:AdvancedPreset = @(
     FontSize="13">
 
     <Window.Resources>
-        <!-- Cores e Pincéis Dinâmicos do Sistema de Temas (5 Temas Suportados) -->
-        <SolidColorBrush x:Key="BgWindow" Color="#0B0D13" />
-        <SolidColorBrush x:Key="BgCard" Color="#161922" />
-        <SolidColorBrush x:Key="BgCardHover" Color="#1E2330" />
-        <SolidColorBrush x:Key="BorderCard" Color="#282E3E" />
-        <SolidColorBrush x:Key="AccentColor" Color="#6366F1" />
-        <SolidColorBrush x:Key="AccentHover" Color="#4F46E5" />
-        <SolidColorBrush x:Key="AccentGreen" Color="#10B981" />
-        <SolidColorBrush x:Key="AccentAmber" Color="#F59E0B" />
-        <SolidColorBrush x:Key="TextPrimary" Color="#F8FAFC" />
-        <SolidColorBrush x:Key="TextSecondary" Color="#94A3B8" />
-        <SolidColorBrush x:Key="TextSelected" Color="#FFFFFF" />
-        <SolidColorBrush x:Key="ChkCardBg" Color="#151823" />
-        <SolidColorBrush x:Key="ChkCardBorder" Color="#232938" />
-        <SolidColorBrush x:Key="ChkBoxBg" Color="#0F121A" />
-        <SolidColorBrush x:Key="ChkBoxBorder" Color="#3B445B" />
-        <SolidColorBrush x:Key="ChkSelectedCardBg" Color="#1E1B4B" />
-        <SolidColorBrush x:Key="ChkSelectedCardBorder" Color="#818CF8" />
-        <SolidColorBrush x:Key="ChkSelectedBoxBg" Color="#6366F1" />
-        <SolidColorBrush x:Key="ChkSelectedBoxBorder" Color="#C7D2FE" />
-        <SolidColorBrush x:Key="ChkActivePill" Color="#818CF8" />
-        <SolidColorBrush x:Key="BtnSecondaryBg" Color="#1E2330" />
-        <SolidColorBrush x:Key="BtnSecondaryFg" Color="#E2E8F0" />
-        <SolidColorBrush x:Key="BtnSecondaryBorder" Color="#2E374D" />
-        <SolidColorBrush x:Key="SearchBg" Color="#161922" />
-        <SolidColorBrush x:Key="SearchText" Color="#F8FAFC" />
-        <SolidColorBrush x:Key="SearchBorder" Color="#282E3E" />
-        <SolidColorBrush x:Key="TerminalBg" Color="#090B0F" />
+        <!-- Cores e Pincéis Dinâmicos do Sistema de Temas (5 Temas Suportados - Padrão: ☀️ Claro) -->
+        <SolidColorBrush x:Key="BgWindow" Color="#F1F5F9" />
+        <SolidColorBrush x:Key="BgCard" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="BgCardHover" Color="#F8FAFC" />
+        <SolidColorBrush x:Key="BorderCard" Color="#CBD5E1" />
+        <SolidColorBrush x:Key="AccentColor" Color="#4F46E5" />
+        <SolidColorBrush x:Key="AccentHover" Color="#4338CA" />
+        <SolidColorBrush x:Key="AccentGreen" Color="#059669" />
+        <SolidColorBrush x:Key="AccentAmber" Color="#D97706" />
+        <SolidColorBrush x:Key="TextPrimary" Color="#0F172A" />
+        <SolidColorBrush x:Key="TextSecondary" Color="#475569" />
+        <SolidColorBrush x:Key="TextSelected" Color="#0F172A" />
+        <SolidColorBrush x:Key="ChkCardBg" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="ChkCardBorder" Color="#CBD5E1" />
+        <SolidColorBrush x:Key="ChkBoxBg" Color="#F8FAFC" />
+        <SolidColorBrush x:Key="ChkBoxBorder" Color="#94A3B8" />
+        <SolidColorBrush x:Key="ChkSelectedCardBg" Color="#EEF2FF" />
+        <SolidColorBrush x:Key="ChkSelectedCardBorder" Color="#6366F1" />
+        <SolidColorBrush x:Key="ChkSelectedBoxBg" Color="#4F46E5" />
+        <SolidColorBrush x:Key="ChkSelectedBoxBorder" Color="#312E81" />
+        <SolidColorBrush x:Key="ChkActivePill" Color="#4F46E5" />
+        <SolidColorBrush x:Key="BtnSecondaryBg" Color="#E2E8F0" />
+        <SolidColorBrush x:Key="BtnSecondaryFg" Color="#1E293B" />
+        <SolidColorBrush x:Key="BtnSecondaryBorder" Color="#CBD5E1" />
+        <SolidColorBrush x:Key="SearchBg" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="SearchText" Color="#0F172A" />
+        <SolidColorBrush x:Key="SearchBorder" Color="#CBD5E1" />
+        <SolidColorBrush x:Key="TerminalBg" Color="#0F172A" />
         <SolidColorBrush x:Key="TerminalText" Color="#38BDF8" />
-        <SolidColorBrush x:Key="ProgressBg" Color="#1E2332" />
-        <SolidColorBrush x:Key="BadgeBg" Color="#1E1B4B" />
+        <SolidColorBrush x:Key="ProgressBg" Color="#E2E8F0" />
+        <SolidColorBrush x:Key="BadgeBg" Color="#EEF2FF" />
         <SolidColorBrush x:Key="BadgeBorder" Color="#6366F1" />
-        <SolidColorBrush x:Key="BadgeText" Color="#A5B4FC" />
-        <SolidColorBrush x:Key="AccentTitle1" Color="#818CF8" />
-        <SolidColorBrush x:Key="AccentTitle2" Color="#38BDF8" />
-        <SolidColorBrush x:Key="AccentTitle3" Color="#F59E0B" />
+        <SolidColorBrush x:Key="BadgeText" Color="#4338CA" />
+        <SolidColorBrush x:Key="AccentTitle1" Color="#4F46E5" />
+        <SolidColorBrush x:Key="AccentTitle2" Color="#0284C7" />
+        <SolidColorBrush x:Key="AccentTitle3" Color="#D97706" />
 
         <!-- ControlTemplate para o ToggleButton do ComboBox (Totalmente Integrado aos Temas) -->
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
@@ -606,8 +606,8 @@ $Global:AdvancedPreset = @(
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
                     <TextBlock Text="🎨 Tema:" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" Margin="0,0,6,0" />
                     <ComboBox Name="CmbThemeSelector" Width="145" Height="30" FontSize="12" VerticalContentAlignment="Center" ToolTip="Selecione o tema visual da interface">
-                        <ComboBoxItem Content="🌙 Escuro" IsSelected="True" />
-                        <ComboBoxItem Content="☀️ Claro" />
+                        <ComboBoxItem Content="☀️ Claro" IsSelected="True" />
+                        <ComboBoxItem Content="🌙 Escuro" />
                         <ComboBoxItem Content="🌌 Cyberpunk" />
                         <ComboBoxItem Content="❄️ Nord Ártico" />
                         <ComboBoxItem Content="🌲 Esmeralda" />
@@ -1138,8 +1138,9 @@ $Global:ThemeDefinitions = @{
 function Set-AppTheme {
     param([string]$ThemeName)
 
-    $key = "Escuro"
-    if ($ThemeName -match "Claro") { $key = "Claro" }
+    $key = "Claro"
+    if ($ThemeName -match "Escuro") { $key = "Escuro" }
+    elseif ($ThemeName -match "Claro") { $key = "Claro" }
     elseif ($ThemeName -match "Cyberpunk") { $key = "Cyberpunk" }
     elseif ($ThemeName -match "Nord") { $key = "Nord" }
     elseif ($ThemeName -match "Esmeralda") { $key = "Esmeralda" }
@@ -2769,6 +2770,7 @@ $BtnRun.Add_Click({
 # -------------------------------------------------------------------------
 # 14. INICIALIZAÇÃO VISUAL (INÍCIO LIMPO - NENHUM AJUSTE PRÉ-MARCADO)
 # -------------------------------------------------------------------------
+Set-AppTheme -ThemeName "Claro"
 Update-SelectionSummary
 
 # Exibir Janela com tratamento seguro de saída
