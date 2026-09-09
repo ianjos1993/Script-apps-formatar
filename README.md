@@ -1,5 +1,10 @@
 # 🚀 Script de Pós-Formatação Windows • por Igor Anjos (Andyz0x)
 
+<p align="left">
+  <a href="https://buymeacoffee.com/ianjos1993" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Considere%20Apoiar-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=000000" alt="Buy Me A Coffee"></a>
+  <a href="https://discord.gg/unbk" target="_blank"><img src="https://img.shields.io/badge/Discord-Comunidade-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
+</p>
+
 Um utilitário completo, moderno e de alta performance para configurar o Windows e instalar seus aplicativos essenciais logo após formatar a máquina — executável diretamente através de uma única linha no PowerShell ou Prompt de Comando (CMD):
 
 ```powershell
@@ -17,7 +22,8 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 > irm https://raw.githubusercontent.com/ianjos1993/Script-apps-formatar/main/setup.ps1 | iex
 > ```
 
-> 💬 **Dúvidas ou Sugestões de novos apps?** Entre no nosso Discord oficial: **[discord.gg/unbk](https://discord.gg/unbk)**
+> 💬 **Dúvidas ou Sugestões de novos apps?** Entre no nosso Discord oficial: **[discord.gg/unbk](https://discord.gg/unbk)**  
+> ☕ **Gostou do utilitário?** [Considere apoiar o projeto no Buy Me a Coffee](https://buymeacoffee.com/ianjos1993) para manter o desenvolvimento ativo e novos apps sendo adicionados!
 
 ---
 
@@ -177,6 +183,20 @@ Tem alguma sugestão de novos softwares para adicionarmos ao catálogo, pedidos 
 Participe da nossa comunidade no Discord e fale diretamente conosco:
 
 👉 **[discord.gg/unbk](https://discord.gg/unbk)**
+
+---
+
+## ☕ Considere Apoiar o Nosso Projeto
+
+Se este utilitário economizou seu tempo, facilitou a configuração do seu computador ou foi útil para você, considere apoiar o projeto com um café! Sua contribuição nos ajuda a manter a lista de mais de 247 softwares sempre atualizada, testar novas otimizações e continuar trazendo melhorias.
+
+<p align="left">
+  <a href="https://buymeacoffee.com/ianjos1993" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50">
+  </a>
+</p>
+
+👉 **[buymeacoffee.com/ianjos1993](https://buymeacoffee.com/ianjos1993)**
 
 ---
 

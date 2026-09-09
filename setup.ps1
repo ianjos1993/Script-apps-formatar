@@ -502,6 +502,34 @@ $Global:AdvancedPreset = @(
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Botão Buy Me a Coffee (Apoiar Projeto) -->
+        <Style x:Key="BtnCoffee" TargetType="Button">
+            <Setter Property="Background" Value="#FFDD00" />
+            <Setter Property="Foreground" Value="#000000" />
+            <Setter Property="BorderBrush" Value="#E5C700" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="BrdCoffee" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BrdCoffee" Property="Background" Value="#FFE853" />
+                                <Setter TargetName="BrdCoffee" Property="BorderBrush" Value="#CCA900" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
 <!-- Botão Open Source Filter -->
         <Style x:Key="BtnFossFilter" TargetType="Button">
             <Setter Property="Background" Value="#064E3B" />
@@ -585,6 +613,9 @@ $Global:AdvancedPreset = @(
                         <ComboBoxItem Content="🌲 Esmeralda" />
                     </ComboBox>
                 </StackPanel>
+
+                <!-- Botão Apoiar o Projeto (Buy Me a Coffee) -->
+                <Button Name="BtnBuyMeACoffee" Content="☕ Considere Apoiar" Style="{StaticResource BtnCoffee}" Margin="0,0,10,0" ToolTip="Considere apoiar o nosso projeto no Buy Me a Coffee: https://buymeacoffee.com/ianjos1993" />
 
                 <!-- Botão Enviar Sugestões / Discord -->
                 <Button Name="BtnDiscordFeedback" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,10,0" ToolTip="Participe do nosso servidor no Discord e envie sugestões: discord.gg/unbk" />
@@ -759,6 +790,7 @@ $Global:AdvancedPreset = @(
                     <Grid Grid.Row="0" Margin="0,0,0,8">
                         <TextBlock Text="Terminal em tempo real da execução:" FontSize="13" Foreground="{DynamicResource TextSecondary}" VerticalAlignment="Center" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Name="BtnCoffeeConsole" Content="☕ Considere Apoiar" Style="{StaticResource BtnCoffee}" Margin="0,0,8,0" ToolTip="Considere apoiar o nosso projeto no Buy Me a Coffee: https://buymeacoffee.com/ianjos1993" />
                             <Button Name="BtnDiscordConsole" Content="💬 Sugestões (Discord)" Style="{StaticResource BtnDiscord}" Margin="0,0,8,0" ToolTip="Envie dúvidas e sugestões no Discord: discord.gg/unbk" />
                             <Button Name="BtnClearLogs" Content="Limpar Logs" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
                             <Button Name="BtnCopyLogs" Content="Copiar Logs" Style="{StaticResource BtnSecondary}" />
@@ -822,10 +854,22 @@ $BtnClearLogs = $Global:Window.FindName("BtnClearLogs")
 $BtnCopyLogs = $Global:Window.FindName("BtnCopyLogs")
 $CmbThemeSelector = $Global:Window.FindName("CmbThemeSelector")
 
-# Botão de Sugestões / Discord
+# Botões de Suporte / Buy Me a Coffee e Discord
+$BtnBuyMeACoffee = $Global:Window.FindName("BtnBuyMeACoffee")
+$BtnCoffeeConsole = $Global:Window.FindName("BtnCoffeeConsole")
 $BtnDiscordFeedback = $Global:Window.FindName("BtnDiscordFeedback")
 $BtnDiscordConsole = $Global:Window.FindName("BtnDiscordConsole")
 
+if ($BtnBuyMeACoffee) {
+    $BtnBuyMeACoffee.Add_Click({
+        Start-Process "https://buymeacoffee.com/ianjos1993"
+    })
+}
+if ($BtnCoffeeConsole) {
+    $BtnCoffeeConsole.Add_Click({
+        Start-Process "https://buymeacoffee.com/ianjos1993"
+    })
+}
 if ($BtnDiscordFeedback) {
     $BtnDiscordFeedback.Add_Click({
         Start-Process "https://discord.gg/unbk"
