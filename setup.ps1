@@ -1,9 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
     Utilitário Completo de Pós-Formatação para Windows (WPF GUI)
     Desenvolvido por Andyz0x.
     Totalmente em Português (Brasil) com Ícones Oficiais, Pack PC Gamer e Destaque Open Source.
-    Executável remotamente via: irm <URL> | iex
+    Executável remotamente via: irm unbk.com.br/setup | iex
 
 .DESCRIPTION
     - 247 Aplicativos organizados com Ícones Oficiais e indicador nítido de Open Source (FOSS).
