@@ -746,14 +746,35 @@ try {
             <TabItem Name="TabItemTweaks" Header="⚙️ Ajustes do Windows (66 Tweaks)">
                 <Grid Margin="0,16,0,0">
                     <Grid.RowDefinitions>
+                        <!-- Barra de Busca de Ajustes -->
+                        <RowDefinition Height="Auto" />
                         <!-- Presets Andyz0x -->
                         <RowDefinition Height="Auto" />
                         <!-- Lista de Tweaks -->
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
+                    <!-- Barra de Busca Rápida de Ajustes -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="380" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Input de Pesquisa -->
+                        <Border Grid.Column="0" Background="{DynamicResource SearchBg}" BorderBrush="{DynamicResource SearchBorder}" BorderThickness="1" CornerRadius="6" Padding="8,4" Margin="0,0,12,0">
+                            <Grid>
+                                <TextBox Name="TxtTweakSearch" Background="Transparent" Foreground="{DynamicResource SearchText}" BorderThickness="0" FontSize="13" VerticalContentAlignment="Center" />
+                                <TextBlock Name="TxtTweakSearchPlaceholder" Text="🔍 Pesquisar ajuste por nome ou descrição..." Foreground="{DynamicResource TextSecondary}" IsHitTestVisible="False" VerticalAlignment="Center" Margin="2,0,0,0" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Resumo de Contagem de Tweaks -->
+                        <TextBlock Name="TxtTweakSummary" Grid.Column="1" Text="Exibindo 66 de 66 ajustes" Foreground="{DynamicResource TextSecondary}" FontSize="12.5" VerticalAlignment="Center" />
+                    </Grid>
+
                     <!-- Presets de Tweaks -->
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,14">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,14">
                         <TextBlock Text="Presets de Ajustes:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource TextSecondary}" FontSize="12" />
                         <Button Name="BtnPresetStandard" Content="⭐ Recomendado (Padrão)" Style="{StaticResource BtnHighlight}" Margin="0,0,8,0" />
                         <Button Name="BtnPresetMinimal" Content="⚡ Mínimo" Style="{StaticResource BtnSecondary}" Margin="0,0,8,0" />
@@ -764,7 +785,7 @@ try {
                     </StackPanel>
 
                     <!-- Scroll dos Tweaks em Cartões Traduzidos -->
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
                         <StackPanel Name="TweaksContainer" Margin="0,0,10,0">
                             <!-- Injetado dinamicamente em 4 categorias oficiais -->
                         </StackPanel>
@@ -774,67 +795,94 @@ try {
 
             <!-- ABA 3: RECURSOS & CORREÇÕES (FEATURES & FIXES) -->
             <TabItem Name="TabItemFeatures" Header="🛠️ Recursos &amp; Correções">
-                <ScrollViewer Margin="0,16,0,0" VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="0,0,10,0">
+                <Grid Margin="0,16,0,0">
+                    <Grid.RowDefinitions>
+                        <!-- Barra de Busca de Recursos -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Conteúdo com Scroll -->
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                        <!-- Card de Recursos Opcionais (DISM) -->
-                        <Border Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,14">
-                            <StackPanel>
-                                <TextBlock Text="📦 Recursos Nativos do Windows (DISM)" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource AccentTitle1}" Margin="0,0,0,4" />
-                                <TextBlock Text="Ativação de componentes avançados da Microsoft diretamente no sistema operacional:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
+                    <!-- Barra de Busca de Recursos e Ferramentas -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="380" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                                <WrapPanel Margin="0,0,0,10">
-                                    <CheckBox Name="ChkFeatWsl" Content="WSL (Windows Subsystem for Linux)" Width="340" ToolTip="Permite rodar distribuições completas do Linux nativamente no Windows" />
-                                    <CheckBox Name="ChkFeatHyperV" Content="Hyper-V (Virtualização da Microsoft)" Width="340" ToolTip="Plataforma nativa de máquinas virtuais para Windows Pro/Enterprise" />
-                                    <CheckBox Name="ChkFeatSandbox" Content="Windows Sandbox (Área Restrita Segura)" Width="340" ToolTip="Ambiente isolado temporário e descartável para testar programas suspeitos" />
-                                    <CheckBox Name="ChkFeatDotNet" Content=".NET Framework 3.5 (Inclui 2.0 e 3.0)" Width="340" ToolTip="Necessário para executar aplicativos e jogos clássicos do Windows" />
-                                    <CheckBox Name="ChkFeatDirectPlay" Content="DirectPlay (Componentes de Jogos Clássicos)" Width="340" ToolTip="Necessário para inicialização de jogos de gerações anteriores" />
-                                </WrapPanel>
-                            </StackPanel>
+                        <Border Grid.Column="0" Background="{DynamicResource SearchBg}" BorderBrush="{DynamicResource SearchBorder}" BorderThickness="1" CornerRadius="6" Padding="8,4" Margin="0,0,12,0">
+                            <Grid>
+                                <TextBox Name="TxtFeatureSearch" Background="Transparent" Foreground="{DynamicResource SearchText}" BorderThickness="0" FontSize="13" VerticalContentAlignment="Center" />
+                                <TextBlock Name="TxtFeatureSearchPlaceholder" Text="🔍 Pesquisar recurso, ferramenta ou painel..." Foreground="{DynamicResource TextSecondary}" IsHitTestVisible="False" VerticalAlignment="Center" Margin="2,0,0,0" />
+                            </Grid>
                         </Border>
 
-                        <!-- Card de Ferramentas de Correção & Reparação -->
-                        <Border Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,14">
-                            <StackPanel>
-                                <TextBlock Text="🔧 Ferramentas de Manutenção e Reparação" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource AccentTitle2}" Margin="0,0,0,4" />
-                                <TextBlock Text="Execução de rotinas recomendadas para resolver instabilidades no sistema:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
+                        <TextBlock Name="TxtFeatureSummary" Grid.Column="1" Text="Exibindo todos os recursos e ferramentas" Foreground="{DynamicResource TextSecondary}" FontSize="12.5" VerticalAlignment="Center" />
+                    </Grid>
 
-                                <WrapPanel>
-                                    <Button Name="BtnActionRepairWinGet" Content="📦 Reinstalar / Reparar WinGet (App Installer)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" ToolTip="Re-registra o App Installer e baixa o pacote oficial mais recente do WinGet da Microsoft" />
-                                    <Button Name="BtnActionSfcDism" Content="🔍 Verificação SFC &amp; DISM (Corrigir Erros de Sistema)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
-                                    <Button Name="BtnActionResetNetwork" Content="🌐 Redefinir Rede &amp; Limpar DNS" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
-                                    <Button Name="BtnActionResetWindowsUpdate" Content="🔄 Redefinir Componentes do Windows Update" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
-                                    <Button Name="BtnActionCleanDisk" Content="⚡ Limpeza de Disco Avançada (Cleanmgr)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
-                                </WrapPanel>
-                            </StackPanel>
-                        </Border>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,0,10,0">
 
-                        <!-- Card de Acesso Rápido a Painéis Clássicos -->
-                        <Border Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,14">
-                            <StackPanel>
-                                <TextBlock Text="⚙️ Acesso Rápido a Painéis Clássicos do Windows" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource AccentTitle3}" Margin="0,0,0,4" />
-                                <TextBlock Text="Abra rapidamente as ferramentas de administração tradicionais:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
+                            <!-- Card de Recursos Opcionais (DISM) -->
+                            <Border Name="CardFeatDism" Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,14">
+                                <StackPanel>
+                                    <TextBlock Text="📦 Recursos Nativos do Windows (DISM)" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource AccentTitle1}" Margin="0,0,0,4" />
+                                    <TextBlock Text="Ativação de componentes avançados da Microsoft diretamente no sistema operacional:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
 
-                                <WrapPanel>
-                                    <Button Name="BtnLaunchControl" Content="Painel de Controle" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                    <Button Name="BtnLaunchNcpa" Content="Conexões de Rede (ncpa.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                    <Button Name="BtnLaunchSysdm" Content="Propriedades do Sistema (sysdm.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                    <Button Name="BtnLaunchCompmgmt" Content="Gerenciamento do Computador" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                    <Button Name="BtnLaunchAppwiz" Content="Programas e Recursos (appwiz.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                    <Button Name="BtnLaunchSound" Content="Configurações de Som (mmsys.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                    <Button Name="BtnLaunchFirewall" Content="Firewall do Windows" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
-                                </WrapPanel>
-                            </StackPanel>
-                        </Border>
+                                    <WrapPanel Margin="0,0,0,10">
+                                        <CheckBox Name="ChkFeatWsl" Content="WSL (Windows Subsystem for Linux)" Width="340" ToolTip="Permite rodar distribuições completas do Linux nativamente no Windows" />
+                                        <CheckBox Name="ChkFeatHyperV" Content="Hyper-V (Virtualização da Microsoft)" Width="340" ToolTip="Plataforma nativa de máquinas virtuais para Windows Pro/Enterprise" />
+                                        <CheckBox Name="ChkFeatSandbox" Content="Windows Sandbox (Área Restrita Segura)" Width="340" ToolTip="Ambiente isolado temporário e descartável para testar programas suspeitos" />
+                                        <CheckBox Name="ChkFeatDotNet" Content=".NET Framework 3.5 (Inclui 2.0 e 3.0)" Width="340" ToolTip="Necessário para executar aplicativos e jogos clássicos do Windows" />
+                                        <CheckBox Name="ChkFeatDirectPlay" Content="DirectPlay (Componentes de Jogos Clássicos)" Width="340" ToolTip="Necessário para inicialização de jogos de gerações anteriores" />
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
 
-                    </StackPanel>
-                </ScrollViewer>
+                            <!-- Card de Ferramentas de Correção & Reparação -->
+                            <Border Name="CardFeatRepair" Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,14">
+                                <StackPanel>
+                                    <TextBlock Text="🔧 Ferramentas de Manutenção e Reparação" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource AccentTitle2}" Margin="0,0,0,4" />
+                                    <TextBlock Text="Execução de rotinas recomendadas para resolver instabilidades no sistema:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
+
+                                    <WrapPanel>
+                                        <Button Name="BtnActionRepairWinGet" Content="📦 Reinstalar / Reparar WinGet (App Installer)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" ToolTip="Re-registra o App Installer e baixa o pacote oficial mais recente do WinGet da Microsoft" />
+                                        <Button Name="BtnActionSfcDism" Content="🔍 Verificação SFC &amp; DISM (Corrigir Erros de Sistema)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
+                                        <Button Name="BtnActionResetNetwork" Content="🌐 Redefinir Rede &amp; Limpar DNS" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
+                                        <Button Name="BtnActionResetWindowsUpdate" Content="🔄 Redefinir Componentes do Windows Update" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
+                                        <Button Name="BtnActionCleanDisk" Content="⚡ Limpeza de Disco Avançada (Cleanmgr)" Style="{StaticResource BtnSecondary}" Margin="0,0,10,10" />
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Card de Acesso Rápido a Painéis Clássicos -->
+                            <Border Name="CardFeatPanels" Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,14">
+                                <StackPanel>
+                                    <TextBlock Text="⚙️ Acesso Rápido a Painéis Clássicos do Windows" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource AccentTitle3}" Margin="0,0,0,4" />
+                                    <TextBlock Text="Abra rapidamente as ferramentas de administração tradicionais:" FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,10" />
+
+                                    <WrapPanel>
+                                        <Button Name="BtnLaunchControl" Content="Painel de Controle" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                        <Button Name="BtnLaunchNcpa" Content="Conexões de Rede (ncpa.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                        <Button Name="BtnLaunchSysdm" Content="Propriedades do Sistema (sysdm.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                        <Button Name="BtnLaunchCompmgmt" Content="Gerenciamento do Computador" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                        <Button Name="BtnLaunchAppwiz" Content="Programas e Recursos (appwiz.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                        <Button Name="BtnLaunchSound" Content="Configurações de Som (mmsys.cpl)" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                        <Button Name="BtnLaunchFirewall" Content="Firewall do Windows" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8" />
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </TabItem>
 
             <!-- ABA 4: CONSOLE / LOGS -->
-            <TabItem Header="📋 Console de Instalação">
+            <TabItem Name="TabItemConsole" Header="📋 Console de Instalação">
                 <Grid Margin="0,16,0,0">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -849,7 +897,29 @@ try {
                         </StackPanel>
                     </Grid>
 
-                    <Border Grid.Row="1" Background="{DynamicResource TerminalBg}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="12">
+                    <!-- Banner Ativo de Progresso & Velocidade de Download (Monitor de Atividade) -->
+                    <Border Name="BdrLiveBanner" Grid.Row="1" Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource AccentColor}" BorderThickness="1.5" CornerRadius="8" Padding="14,10" Margin="0,0,0,10" Visibility="Collapsed">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,4">
+                                    <TextBlock Name="TxtLiveSpinner" Text="⚡" FontSize="14" Margin="0,0,8,0" VerticalAlignment="Center" Foreground="{DynamicResource AccentColor}" />
+                                    <TextBlock Name="TxtLiveTaskTitle" Text="Aguardando início..." FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Name="TxtLiveTaskStatus" Text="Velocidade e atividade em tempo real" FontSize="12" Foreground="{DynamicResource TextSecondary}" />
+                            </StackPanel>
+
+                            <Border Grid.Column="1" Background="{DynamicResource BadgeBg}" BorderBrush="{DynamicResource BadgeBorder}" BorderThickness="1" CornerRadius="6" Padding="10,5" VerticalAlignment="Center">
+                                <TextBlock Name="TxtLiveWatchdogBadge" Text="🟢 Operação Ativa" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BadgeText}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2" Background="{DynamicResource TerminalBg}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1" CornerRadius="8" Padding="12">
                         <TextBox Name="TxtLogs" Background="Transparent" Foreground="{DynamicResource TerminalText}" FontFamily="Consolas, Cascadia Code, Courier New" FontSize="13" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="0" Text="Aguardando início do processo... Selecione os itens desejados e clique em 'Executar Selecionados'.&#x0a;" />
                     </Border>
                 </Grid>
@@ -866,14 +936,17 @@ try {
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,20,0">
-                    <TextBlock Name="TxtSelectionSummary" Text="0 aplicativos e 0 tweaks selecionados." Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,6">
+                        <TextBlock Name="TxtSelectionSummary" Text="0 aplicativos e 0 tweaks selecionados." Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center" />
+                        <TextBlock Name="TxtFooterLiveSpeed" Text="" Foreground="{DynamicResource AccentTitle1}" FontSize="12.5" FontWeight="SemiBold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed" />
+                    </Grid>
                     <ProgressBar Name="ProgressBar" Height="10" Background="{DynamicResource ProgressBg}" Foreground="{DynamicResource AccentColor}" BorderThickness="0" Value="0" Maximum="100" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Name="BtnCoffeeFooter" Content="☕ Considere Apoiar" Style="{StaticResource BtnCoffee}" Margin="0,0,10,0" ToolTip="Considere apoiar o nosso projeto no Buy Me a Coffee: https://buymeacoffee.com/ianjos1993" />
                     <Button Name="BtnUninstallApps" Content="🗑️ Desinstalar Apps" Style="{StaticResource BtnDanger}" Margin="0,0,10,0" ToolTip="Desinstala os aplicativos selecionados via WinGet" />
-                    <Button Name="BtnRevertTweaks" Content="↩️ Reverter Tweaks" Style="{StaticResource BtnWarning}" Margin="0,0,10,0" ToolTip="Restaura os ajustes selecionados para os padrões originais do Windows" />
+                    <Button Name="BtnRevertTweaks" Content="↩️ Reverter Tweaks" Style="{StaticResource BtnWarning}" Margin="0,0,10,10" ToolTip="Restaura os ajustes selecionados para os padrões originais do Windows" />
                     <Button Name="BtnRun" Content="🚀 Instalar / Aplicar" Style="{StaticResource BtnPrimary}" ToolTip="Instala os aplicativos e aplica os tweaks selecionados" />
                 </StackPanel>
             </Grid>
@@ -924,6 +997,27 @@ $TxtAppSearch = $Global:Window.FindName("TxtAppSearch")
 $TxtSearchPlaceholder = $Global:Window.FindName("TxtSearchPlaceholder")
 $CmbCategoryFilter = $Global:Window.FindName("CmbCategoryFilter")
 $TxtAppSummary = $Global:Window.FindName("TxtAppSummary")
+
+# Buscadores e Resumos das 3 Abas
+$TxtTweakSearch = $Global:Window.FindName("TxtTweakSearch")
+$TxtTweakSearchPlaceholder = $Global:Window.FindName("TxtTweakSearchPlaceholder")
+$TxtTweakSummary = $Global:Window.FindName("TxtTweakSummary")
+
+$TxtFeatureSearch = $Global:Window.FindName("TxtFeatureSearch")
+$TxtFeatureSearchPlaceholder = $Global:Window.FindName("TxtFeatureSearchPlaceholder")
+$TxtFeatureSummary = $Global:Window.FindName("TxtFeatureSummary")
+
+$CardFeatDism = $Global:Window.FindName("CardFeatDism")
+$CardFeatRepair = $Global:Window.FindName("CardFeatRepair")
+$CardFeatPanels = $Global:Window.FindName("CardFeatPanels")
+
+# Monitor de Execução, Download e Watchdog
+$BdrLiveBanner = $Global:Window.FindName("BdrLiveBanner")
+$TxtLiveSpinner = $Global:Window.FindName("TxtLiveSpinner")
+$TxtLiveTaskTitle = $Global:Window.FindName("TxtLiveTaskTitle")
+$TxtLiveTaskStatus = $Global:Window.FindName("TxtLiveTaskStatus")
+$TxtLiveWatchdogBadge = $Global:Window.FindName("TxtLiveWatchdogBadge")
+$TxtFooterLiveSpeed = $Global:Window.FindName("TxtFooterLiveSpeed")
 $TxtSelectionSummary = $Global:Window.FindName("TxtSelectionSummary")
 $TxtLogs = $Global:Window.FindName("TxtLogs")
 $ProgressBar = $Global:Window.FindName("ProgressBar")
@@ -1415,6 +1509,7 @@ foreach ($cat in $appCategories) {
 # 7. MONTAGEM DINÂMICA DA ABA DE TWEAKS TOTALMENTE TRADUZIDA (66 TWEAKS)
 # -------------------------------------------------------------------------
 $tweakCategories = $Global:TweakCatalog | Group-Object Category
+$Global:TweakCategoryCards = @()
 
 foreach ($tcat in $tweakCategories) {
     $tcard = New-Object System.Windows.Controls.Border
@@ -1461,6 +1556,10 @@ foreach ($tcat in $tweakCategories) {
     $tstack.Children.Add($twrap) | Out-Null
     $tcard.Child = $tstack
     $TweaksContainer.Children.Add($tcard) | Out-Null
+    $Global:TweakCategoryCards += @{
+        Card = $tcard
+        CategoryName = $tcat.Name
+    }
 }
 
 # -------------------------------------------------------------------------
@@ -1513,6 +1612,132 @@ function Filter-Applications {
 
 $TxtAppSearch.Add_TextChanged({ Filter-Applications })
 $CmbCategoryFilter.Add_SelectionChanged({ Filter-Applications })
+
+# -------------------------------------------------------------------------
+# 8.1 FILTRO EM TEMPO REAL DE AJUSTES DO WINDOWS (TWEAKS)
+# -------------------------------------------------------------------------
+function Filter-Tweaks {
+    $searchTerm = if ($TxtTweakSearch) { $TxtTweakSearch.Text.Trim().ToLower() } else { "" }
+
+    if ($searchTerm.Length -gt 0) {
+        if ($TxtTweakSearchPlaceholder) { $TxtTweakSearchPlaceholder.Visibility = [System.Windows.Visibility]::Collapsed }
+    } else {
+        if ($TxtTweakSearchPlaceholder) { $TxtTweakSearchPlaceholder.Visibility = [System.Windows.Visibility]::Visible }
+    }
+
+    $visibleCount = 0
+
+    foreach ($catCard in $Global:TweakCategoryCards) {
+        $card = $catCard.Card
+        $cardVisible = $false
+
+        if ($card.Child -is [System.Windows.Controls.Panel]) {
+            $tstack = $card.Child
+            if ($tstack.Children.Count -ge 2 -and $tstack.Children[1] -is [System.Windows.Controls.WrapPanel]) {
+                $twrap = $tstack.Children[1]
+                foreach ($child in $twrap.Children) {
+                    if ($child -is [System.Windows.Controls.CheckBox]) {
+                        $text = if ($child.Content) { $child.Content.ToString().ToLower() } else { "" }
+                        $tip = if ($child.ToolTip) { $child.ToolTip.ToString().ToLower() } else { "" }
+
+                        $matches = ($searchTerm.Length -eq 0) -or ($text -like "*$searchTerm*") -or ($tip -like "*$searchTerm*")
+
+                        if ($matches) {
+                            $child.Visibility = [System.Windows.Visibility]::Visible
+                            $cardVisible = $true
+                            $visibleCount++
+                        } else {
+                            $child.Visibility = [System.Windows.Visibility]::Collapsed
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($cardVisible) {
+            $card.Visibility = [System.Windows.Visibility]::Visible
+        } else {
+            $card.Visibility = [System.Windows.Visibility]::Collapsed
+        }
+    }
+
+    if ($TxtTweakSummary) {
+        $totalTweaks = $Global:TweakCheckBoxes.Count
+        if ($searchTerm.Length -gt 0) {
+            $TxtTweakSummary.Text = "Exibindo $visibleCount de $totalTweaks ajustes encontrados"
+        } else {
+            $TxtTweakSummary.Text = "Exibindo 66 de 66 ajustes"
+        }
+    }
+}
+
+if ($TxtTweakSearch) {
+    $TxtTweakSearch.Add_TextChanged({
+        Filter-Tweaks
+    })
+}
+
+# -------------------------------------------------------------------------
+# 8.2 FILTRO EM TEMPO REAL DE RECURSOS & CORREÇÕES (TAB 3)
+# -------------------------------------------------------------------------
+function Filter-Features {
+    $searchTerm = if ($TxtFeatureSearch) { $TxtFeatureSearch.Text.Trim().ToLower() } else { "" }
+
+    if ($searchTerm.Length -gt 0) {
+        if ($TxtFeatureSearchPlaceholder) { $TxtFeatureSearchPlaceholder.Visibility = [System.Windows.Visibility]::Collapsed }
+    } else {
+        if ($TxtFeatureSearchPlaceholder) { $TxtFeatureSearchPlaceholder.Visibility = [System.Windows.Visibility]::Visible }
+    }
+
+    $visibleCount = 0
+
+    $featureGroups = @(
+        @{ Card = $CardFeatDism; Elements = @($ChkFeatWsl, $ChkFeatHyperV, $ChkFeatSandbox, $ChkFeatDotNet, $ChkFeatDirectPlay) },
+        @{ Card = $CardFeatRepair; Elements = @($BtnActionRepairWinGet, $BtnActionSfcDism, $BtnActionResetNetwork, $BtnActionResetWindowsUpdate, $BtnActionCleanDisk) },
+        @{ Card = $CardFeatPanels; Elements = @($BtnLaunchControl, $BtnLaunchNcpa, $BtnLaunchSysdm, $BtnLaunchCompmgmt, $BtnLaunchAppwiz, $BtnLaunchSound, $BtnLaunchFirewall) }
+    )
+
+    foreach ($grp in $featureGroups) {
+        if (-not $grp.Card) { continue }
+        $cardHasVisible = $false
+
+        foreach ($elem in $grp.Elements) {
+            if (-not $elem) { continue }
+            $text = if ($elem.Content) { $elem.Content.ToString().ToLower() } else { "" }
+            $tip = if ($elem.ToolTip) { $elem.ToolTip.ToString().ToLower() } else { "" }
+
+            $matches = ($searchTerm.Length -eq 0) -or ($text -like "*$searchTerm*") -or ($tip -like "*$searchTerm*")
+
+            if ($matches) {
+                $elem.Visibility = [System.Windows.Visibility]::Visible
+                $cardHasVisible = $true
+                $visibleCount++
+            } else {
+                $elem.Visibility = [System.Windows.Visibility]::Collapsed
+            }
+        }
+
+        if ($cardHasVisible) {
+            $grp.Card.Visibility = [System.Windows.Visibility]::Visible
+        } else {
+            $grp.Card.Visibility = [System.Windows.Visibility]::Collapsed
+        }
+    }
+
+    if ($TxtFeatureSummary) {
+        if ($searchTerm.Length -gt 0) {
+            $TxtFeatureSummary.Text = "Exibindo $visibleCount item(ns) encontrado(s)"
+        } else {
+            $TxtFeatureSummary.Text = "Exibindo todos os recursos e ferramentas"
+        }
+    }
+}
+
+if ($TxtFeatureSearch) {
+    $TxtFeatureSearch.Add_TextChanged({
+        Filter-Features
+    })
+}
 
 # Botão Filtro Rápido Open Source
 $BtnToggleFossOnly.Add_Click({
@@ -1609,6 +1834,114 @@ function Pump-GuiEvents {
             Pump-GuiEvents
         } catch {}
     }
+}
+
+function Get-NetworkBytesReceived {
+    try {
+        $interfaces = [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces() |
+            Where-Object { $_.OperationalStatus -eq [System.Net.NetworkInformation.OperationalStatus]::Up -and $_.NetworkInterfaceType -ne [System.Net.NetworkInformation.NetworkInterfaceType]::Loopback }
+        $total = 0
+        foreach ($iface in $interfaces) {
+            $stats = $iface.GetIPv4Statistics()
+            $total += $stats.BytesReceived
+        }
+        return $total
+    } catch {
+        return 0
+    }
+}
+
+function Update-LiveBanner {
+    param(
+        [string]$TaskName,
+        [string]$Detail,
+        [int]$ElapsedSeconds = 0,
+        [bool]$IsActive = $true
+    )
+
+    if (-not $BdrLiveBanner) { return }
+
+    $BdrLiveBanner.Dispatcher.Invoke([Action]{
+        if ($IsActive) {
+            $BdrLiveBanner.Visibility = [System.Windows.Visibility]::Visible
+            if ($TxtFooterLiveSpeed) { $TxtFooterLiveSpeed.Visibility = [System.Windows.Visibility]::Visible }
+            
+            $spinners = @("⚡", "🔄", "⏳", "🚀")
+            $spinIdx = ($ElapsedSeconds) % 4
+            if ($TxtLiveSpinner) { $TxtLiveSpinner.Text = $spinners[$spinIdx] }
+            
+            if ($TxtLiveTaskTitle) { $TxtLiveTaskTitle.Text = $TaskName }
+            if ($TxtLiveTaskStatus) { $TxtLiveTaskStatus.Text = "$Detail • ⏱️ ${ElapsedSeconds}s decorridos" }
+            if ($TxtFooterLiveSpeed) { $TxtFooterLiveSpeed.Text = "$Detail (⏱️ ${ElapsedSeconds}s)" }
+
+            if ($TxtLiveWatchdogBadge) {
+                if ($ElapsedSeconds -ge 25) {
+                    $TxtLiveWatchdogBadge.Text = "🟢 Ativo há ${ElapsedSeconds}s (o instalador está trabalhando, não travou)"
+                    $TxtLiveWatchdogBadge.Foreground = [System.Windows.Media.Brushes]::LimeGreen
+                } else {
+                    $TxtLiveWatchdogBadge.Text = "🟢 Operação em Andamento"
+                    $TxtLiveWatchdogBadge.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "BadgeText")
+                }
+            }
+        } else {
+            $BdrLiveBanner.Visibility = [System.Windows.Visibility]::Collapsed
+            if ($TxtFooterLiveSpeed) { $TxtFooterLiveSpeed.Visibility = [System.Windows.Visibility]::Collapsed }
+        }
+    })
+    Pump-GuiEvents
+}
+
+function Wait-ProcessWithLiveFeedback {
+    param(
+        [System.Diagnostics.Process]$Process,
+        [string]$TaskName,
+        [int]$CurrentIndex,
+        [int]$TotalCount,
+        [double]$Percent
+    )
+
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    $lastBytes = Get-NetworkBytesReceived
+    $lastTime = [DateTime]::UtcNow
+    $lastSpeedText = "Iniciando processo..."
+
+    while (-not $Process.HasExited) {
+        Start-Sleep -Milliseconds 400
+        Pump-GuiEvents
+
+        $now = [DateTime]::UtcNow
+        $elapsedSec = ($now - $lastTime).TotalSeconds
+
+        if ($elapsedSec -ge 0.8) {
+            $currentBytes = Get-NetworkBytesReceived
+            $bytesDiff = [math]::Max(0, $currentBytes - $lastBytes)
+            $speedBytesPerSec = $bytesDiff / $elapsedSec
+            $lastBytes = $currentBytes
+            $lastTime = $now
+
+            if ($speedBytesPerSec -ge 1MB) {
+                $lastSpeedText = "⚡ Download: {0:N1} MB/s" -f ($speedBytesPerSec / 1MB)
+            } elseif ($speedBytesPerSec -ge 50KB) {
+                $lastSpeedText = "⚡ Download: {0:N0} KB/s" -f ($speedBytesPerSec / 1KB)
+            } else {
+                $lastSpeedText = "⚙️ Processando / Gravando no disco..."
+            }
+
+            $totalElapsed = [math]::Round($sw.Elapsed.TotalSeconds)
+            $watchdog = if ($totalElapsed -ge 25) {
+                " • 💡 Ativo há ${totalElapsed}s (não travou, aguarde...)"
+            } else {
+                " • ⏱️ ${totalElapsed}s"
+            }
+
+            Set-GuiStatus "[$CurrentIndex de $TotalCount] $TaskName • $lastSpeedText$watchdog" $Percent
+            Update-LiveBanner -TaskName $TaskName -Detail $lastSpeedText -ElapsedSeconds $totalElapsed -IsActive $true
+        }
+    }
+
+    $sw.Stop()
+    Update-LiveBanner -TaskName $TaskName -Detail "Finalizado" -ElapsedSeconds ([math]::Round($sw.Elapsed.TotalSeconds)) -IsActive $false
+    return $Process.ExitCode
 }
 
 function Set-GuiStatus {
@@ -2573,14 +2906,15 @@ function Install-SelectedApps {
         Write-GuiLog "[$curr/$total] Baixando e instalando $($app.Name) (ID: $($app.Id))..." "INFO"
 
         try {
-            $process = Start-Process winget -ArgumentList "install --id `"$($app.Id)`" -e --silent --accept-package-agreements --accept-source-agreements" -NoNewWindow -PassThru -Wait
+            $process = Start-Process winget -ArgumentList "install --id `"$($app.Id)`" -e --silent --accept-package-agreements --accept-source-agreements" -NoNewWindow -PassThru
+            $exitCode = Wait-ProcessWithLiveFeedback -Process $process -TaskName "Instalando $($app.Name)" -CurrentIndex $curr -TotalCount $total -Percent $percent
 
-            if ($process.ExitCode -eq 0) {
+            if ($exitCode -eq 0) {
                 Write-GuiLog "$($app.Name) instalado com sucesso!" "SUCCESS"
-            } elseif ($process.ExitCode -eq -1978335189 -or $process.ExitCode -eq 2316632107) {
+            } elseif ($exitCode -eq -1978335189 -or $exitCode -eq 2316632107) {
                 Write-GuiLog "$($app.Name) já se encontra na versão mais recente." "SUCCESS"
             } else {
-                Write-GuiLog "Aviso ao instalar $($app.Name) (ExitCode: $($process.ExitCode))." "WARN"
+                Write-GuiLog "Aviso ao instalar $($app.Name) (ExitCode: $exitCode)." "WARN"
             }
         } catch {
             Write-GuiLog "Falha na execução do WinGet para $($app.Name): $_" "ERROR"
@@ -2807,6 +3141,159 @@ $BtnRevertTweaks.Add_Click({ Revert-SelectedTweaks })
 $BtnUninstallAppsTab.Add_Click({ Uninstall-SelectedApps })
 $BtnRevertTweaksTab.Add_Click({ Revert-SelectedTweaks })
 
+# -------------------------------------------------------------------------
+# 13.1 MODAL MODERNO DE FINALIZAÇÃO, AGRADECIMENTO & BUY ME A COFFEE
+# -------------------------------------------------------------------------
+function Show-CompletionDialog {
+    param(
+        [int]$AppCount = 0,
+        [int]$TweakCount = 0,
+        [int]$FeatCount = 0,
+        $OwnerWindow = $null
+    )
+
+    $dialogXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Setup Finalizado com Sucesso!"
+        Width="580" Height="420"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#0f111a"
+        Foreground="#ffffff"
+        FontFamily="Segoe UI, Segoe UI Variable, Arial"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Border Background="#151824" BorderBrush="{DynamicResource AccentColor}" BorderThickness="1.5" CornerRadius="14" Padding="24">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Cabeçalho do Modal com Logo -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,16">
+                <Border Width="50" Height="50" CornerRadius="12" Margin="0,0,14,0" Background="#060810" BorderBrush="{DynamicResource AccentColor}" BorderThickness="1.5">
+                    <Border.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Width="50" Height="50" CornerRadius="12" Background="Black" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Border.OpacityMask>
+                    <Image Name="ModalAppLogo" Width="50" Height="50" Stretch="Uniform" />
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="🎉 Setup Finalizado com Sucesso!" FontSize="19" FontWeight="Bold" Foreground="#ffffff" />
+                    <TextBlock Text="Todos os itens selecionados foram aplicados no seu computador." FontSize="12.5" Foreground="#94a3b8" Margin="0,3,0,0" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Mensagem de Agradecimento & Buy Me a Coffee -->
+            <Border Grid.Row="1" Background="#0f111a" BorderBrush="#232838" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,0,0,20">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Muito obrigado por utilizar o nosso Script!" FontSize="14.5" FontWeight="Bold" Foreground="#60a5fa" Margin="0,0,0,8" />
+                    <TextBlock TextWrapping="Wrap" FontSize="13" LineHeight="20" Foreground="#cbd5e1">
+                        Se este utilitário economizou seu tempo, facilitou a configuração do seu computador ou foi útil para você de alguma forma, considere apoiar o projeto com qualquer valor no <Bold Foreground="#FFDD00">Buy Me a Coffee</Bold>!
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#94a3b8" Margin="0,8,0,0">
+                        ☕ Sua contribuição nos ajuda a manter a lista de mais de 247 softwares sempre atualizada, testar novas otimizações e continuar trazendo melhorias.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Botões de Ação -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="BtnModalCoffee" Grid.Column="0" Content="☕ Apoiar no Buy Me a Coffee"
+                        Height="42" Background="#FFDD00" Foreground="#000000" FontWeight="Bold" FontSize="13"
+                        Cursor="Hand" Margin="0,0,12,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="Brd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Brd" Property="Background" Value="#FFE853" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Name="BtnModalClose" Grid.Column="1" Content="✔️ Concluir"
+                        Height="42" Width="110" Background="#3b82f6" Foreground="#ffffff" FontWeight="Bold" FontSize="13"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="Brd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Brd" Property="Background" Value="#2563eb" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
+"@
+
+    $stringReader = New-Object System.IO.StringReader($dialogXaml)
+    $xmlReader = [System.Xml.XmlReader]::Create($stringReader)
+    $dialog = [System.Windows.Markup.XamlReader]::Load($xmlReader)
+
+    if ($Global:Window.Icon) {
+        $dialog.Icon = $Global:Window.Icon
+    } elseif ($Global:AppLogoBitmap) {
+        $dialog.Icon = $Global:AppLogoBitmap
+    }
+
+    $modalLogo = $dialog.FindName("ModalAppLogo")
+    if ($modalLogo -and $Global:AppLogoBitmap) {
+        $modalLogo.Source = $Global:AppLogoBitmap
+    }
+
+    $btnCoffee = $dialog.FindName("BtnModalCoffee")
+    $btnClose = $dialog.FindName("BtnModalClose")
+
+    if ($btnCoffee) {
+        $btnCoffee.Add_Click({
+            Start-Process "https://buymeacoffee.com/ianjos1993"
+        })
+    }
+
+    if ($btnClose) {
+        $btnClose.Add_Click({
+            $dialog.Close()
+        })
+    }
+
+    if ($OwnerWindow) {
+        $dialog.Owner = $OwnerWindow
+        $dialog.WindowStartupLocation = [System.Windows.WindowStartupLocation]::CenterOwner
+    }
+
+    $dialog.Add_MouseLeftButtonDown({
+        if ($_.ButtonState -eq [System.Windows.Input.MouseButtonState]::Pressed) {
+            $dialog.DragMove()
+        }
+    })
+
+    $dialog.ShowDialog() | Out-Null
+}
+
 $BtnRun.Add_Click({
     $appCount = ($Global:AppCheckBoxes.Values | Where-Object { $_.CheckBox.IsChecked -eq $true }).Count
     $tweakCount = ($Global:TweakCheckBoxes.Values | Where-Object { $_.CheckBox.IsChecked -eq $true }).Count
@@ -2846,7 +3333,8 @@ $BtnRun.Add_Click({
 
     $BtnRun.IsEnabled = $true
     $BtnRun.Content = "✔️ Concluído"
-    [System.Windows.MessageBox]::Show("Processo finalizado com sucesso! Todos os softwares e ajustes selecionados foram aplicados no seu computador.", "Setup Concluído", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+    # Modal Moderno de Agradecimento & Buy Me a Coffee
+    Show-CompletionDialog -AppCount $appCount -TweakCount $tweakCount -FeatCount $featCount -OwnerWindow $Global:Window
 })
 
 # -------------------------------------------------------------------------
