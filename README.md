@@ -1,11 +1,18 @@
-# 🚀 Script de Pós-Formatação Windows • por Igor Anjos (Andyz0x)
+<div align="center">
+  <img src="assets/logo.png" alt="Logo Igor Anjos (ianjos1993)" width="180" />
 
-<p align="left">
-  <a href="https://buymeacoffee.com/ianjos1993" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Considere%20Apoiar-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=000000" alt="Buy Me A Coffee"></a>
-  <a href="https://discord.gg/unbk" target="_blank"><img src="https://img.shields.io/badge/Discord-Comunidade-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
-</p>
+  # 🚀 Script de Pós-Formatação Windows
+  ### Desenvolvido por Igor Anjos (Andyz0x • ianjos1993)
 
-Um utilitário completo, moderno e de alta performance para configurar o Windows e instalar seus aplicativos essenciais logo após formatar a máquina — executável diretamente através de uma única linha no PowerShell ou Prompt de Comando (CMD):
+  <p>
+    <a href="https://buymeacoffee.com/ianjos1993" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Considere%20Apoiar-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=000000" alt="Buy Me A Coffee"></a>
+    <a href="https://discord.gg/unbk" target="_blank"><img src="https://img.shields.io/badge/Discord-Comunidade-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
+  </p>
+
+  <p>
+    <i>Um utilitário completo, moderno e de alta performance para configurar o Windows e instalar seus aplicativos essenciais logo após formatar a máquina — executável diretamente através de uma única linha no PowerShell ou Prompt de Comando (CMD):</i>
+  </p>
+</div>
 
 ```powershell
 # Execução direta no PowerShell (Recomendado):
@@ -200,4 +207,7 @@ Se este utilitário economizou seu tempo, facilitou a configuração do seu comp
 
 ---
 
-Desenvolvido por **Igor Anjos** • unbk.com.br
+<div align="center">
+  <img src="assets/logo.png" alt="Logo Igor Anjos" width="70" />
+  <p>Desenvolvido por <b>Igor Anjos (Andyz0x)</b> • <a href="https://unbk.com.br" target="_blank">unbk.com.br</a></p>
+</div>
