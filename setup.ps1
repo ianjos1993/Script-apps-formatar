@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Utilitário Completo de Pós-Formatação para Windows (WPF GUI)
     Desenvolvido por Andyz0x.
@@ -690,18 +690,25 @@ try {
                     <!-- Barra de Busca Rápida e Categoria -->
                     <Grid Grid.Row="0" Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="340" />
+                            <ColumnDefinition Width="380" />
                             <ColumnDefinition Width="260" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Input de Pesquisa -->
-                        <Border Grid.Column="0" Background="{DynamicResource SearchBg}" BorderBrush="{DynamicResource SearchBorder}" BorderThickness="1" CornerRadius="6" Padding="8,4" Margin="0,0,12,0">
-                            <Grid>
-                                <TextBox Name="TxtAppSearch" Background="Transparent" Foreground="{DynamicResource SearchText}" BorderThickness="0" FontSize="13" VerticalContentAlignment="Center" />
-                                <TextBlock Name="TxtSearchPlaceholder" Text="🔍 Pesquisar aplicativo por nome ou ID..." Foreground="{DynamicResource TextSecondary}" IsHitTestVisible="False" VerticalAlignment="Center" Margin="2,0,0,0" />
-                            </Grid>
-                        </Border>
+                        <!-- Input de Pesquisa e Atalho WinGet -->
+                        <Grid Grid.Column="0" Margin="0,0,12,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="{DynamicResource SearchBg}" BorderBrush="{DynamicResource SearchBorder}" BorderThickness="1" CornerRadius="6" Padding="8,4">
+                                <Grid>
+                                    <TextBox Name="TxtAppSearch" Background="Transparent" Foreground="{DynamicResource SearchText}" BorderThickness="0" FontSize="13" VerticalContentAlignment="Center" />
+                                    <TextBlock Name="TxtSearchPlaceholder" Text="🔍 Pesquisar aplicativo por nome ou ID..." Foreground="{DynamicResource TextSecondary}" IsHitTestVisible="False" VerticalAlignment="Center" Margin="2,0,0,0" />
+                                </Grid>
+                            </Border>
+                            <Button Name="BtnQuickWingetSearch" Grid.Column="1" Content="🌐 WinGet" Height="34" Margin="6,0,0,0" Padding="10,0" Style="{StaticResource BtnKitAndyz0x}" FontSize="12" ToolTip="Pesquisar aplicativo no catálogo oficial da Microsoft (WinGet)" Cursor="Hand" />
+                        </Grid>
 
                         <!-- ComboBox de Filtro de Categoria -->
                         <ComboBox Name="CmbCategoryFilter" Grid.Column="1" Height="34" FontSize="13" VerticalContentAlignment="Center" Margin="0,0,12,0" ToolTip="Filtrar aplicativos por categoria" />
@@ -713,6 +720,7 @@ try {
                     <!-- Presets Rápidos de Apps -->
                     <WrapPanel Grid.Row="1" Margin="0,0,0,10">
                         <TextBlock Text="Presets Rápidos:" VerticalAlignment="Center" Margin="0,0,10,6" Foreground="{DynamicResource TextSecondary}" FontSize="12" />
+                        <Button Name="BtnSearchWingetApp" Content="🌐 Buscar no WinGet" Style="{StaticResource BtnKitAndyz0x}" Margin="0,0,8,6" ToolTip="Pesquisar e adicionar qualquer aplicativo do repositório oficial da Microsoft (WinGet) que não esteja na lista padrão" />
                         <Button Name="BtnPresetKitAndyz0x" Content="👑 Kit Andyz0x (Completo)" Style="{StaticResource BtnKitAndyz0x}" Margin="0,0,8,6" />
                         <Button Name="BtnPresetPackGamer" Content="🎮 Pack PC Gamer (Essenciais)" Style="{StaticResource BtnGamerPack}" Margin="0,0,8,6" />
                         <Button Name="BtnPresetEssenciais" Content="⭐ Essenciais" Style="{StaticResource BtnSecondary}" Margin="0,0,8,6" />
@@ -728,8 +736,25 @@ try {
 
                     <!-- Conteúdo com Scroll -->
                     <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Name="AppsContainer" Margin="0,0,10,0">
-                            <!-- Injetado dinamicamente no PowerShell com Ícones e Badges FOSS -->
+                        <StackPanel Margin="0,0,10,0">
+                            <!-- Banner contextual quando busca local não encontra resultados -->
+                            <Border Name="BorderWingetPrompt" Background="{DynamicResource BgCard}" BorderBrush="{DynamicResource BorderCard}" BorderThickness="1.5" CornerRadius="8" Padding="14" Margin="0,0,0,14" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="🌐 Não encontrou o aplicativo procurado?" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" />
+                                        <TextBlock Name="TxtWingetPromptMsg" Text="Pesquise no catálogo oficial do WinGet com mais de 10.000 softwares disponíveis." FontSize="12" Foreground="{DynamicResource TextSecondary}" Margin="0,2,0,0" />
+                                    </StackPanel>
+                                    <Button Name="BtnPromptSearchWinget" Grid.Column="1" Content="🔍 Pesquisar no WinGet" Style="{StaticResource BtnKitAndyz0x}" Padding="14,8" VerticalAlignment="Center" Cursor="Hand" />
+                                </Grid>
+                            </Border>
+
+                            <StackPanel Name="AppsContainer">
+                                <!-- Injetado dinamicamente no PowerShell com Ícones e Badges FOSS -->
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
@@ -984,6 +1009,11 @@ $AppsContainer = $Global:Window.FindName("AppsContainer")
 $TweaksContainer = $Global:Window.FindName("TweaksContainer")
 $TxtAppSearch = $Global:Window.FindName("TxtAppSearch")
 $TxtSearchPlaceholder = $Global:Window.FindName("TxtSearchPlaceholder")
+$BtnQuickWingetSearch = $Global:Window.FindName("BtnQuickWingetSearch")
+$BtnSearchWingetApp = $Global:Window.FindName("BtnSearchWingetApp")
+$BorderWingetPrompt = $Global:Window.FindName("BorderWingetPrompt")
+$TxtWingetPromptMsg = $Global:Window.FindName("TxtWingetPromptMsg")
+$BtnPromptSearchWinget = $Global:Window.FindName("BtnPromptSearchWinget")
 $CmbCategoryFilter = $Global:Window.FindName("CmbCategoryFilter")
 $TxtAppSummary = $Global:Window.FindName("TxtAppSummary")
 
@@ -1592,6 +1622,17 @@ function Filter-Applications {
             $catGroup.Border.Visibility = [System.Windows.Visibility]::Visible
         } else {
             $catGroup.Border.Visibility = [System.Windows.Visibility]::Collapsed
+        }
+    }
+
+    if ($BorderWingetPrompt) {
+        if ($visibleCount -eq 0 -and $searchTerm.Length -gt 0) {
+            $BorderWingetPrompt.Visibility = [System.Windows.Visibility]::Visible
+            if ($TxtWingetPromptMsg) {
+                $TxtWingetPromptMsg.Text = "Nenhum aplicativo catalogado encontrado para '$($TxtAppSearch.Text.Trim())'. Deseja buscar no catálogo oficial do WinGet?"
+            }
+        } else {
+            $BorderWingetPrompt.Visibility = [System.Windows.Visibility]::Collapsed
         }
     }
 
@@ -2211,6 +2252,564 @@ function Show-GpuSelectionDialog {
 
     $dialog.ShowDialog() | Out-Null
     return $result.Choice
+}
+
+# -------------------------------------------------------------------------
+# 10.1 BUSCA DINÂMICA E INSTALAÇÃO DE APLICATIVOS VIA WINGET
+# -------------------------------------------------------------------------
+function Search-WinGetPackages {
+    param([string]$Query)
+    if ([string]::IsNullOrWhiteSpace($Query)) { return @() }
+
+    $lines = & winget search "$Query" --accept-source-agreements 2>$null
+    if (-not $lines -or $lines.Count -lt 2) { return @() }
+
+    $headerIndex = -1
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -match '^[-]{6,}') {
+            $headerIndex = $i - 1
+            break
+        }
+    }
+
+    if ($headerIndex -lt 0) { return @() }
+
+    $header = $lines[$headerIndex]
+    $idCol = $header.IndexOf('Id')
+    $verCol = $header.IndexOf('Version')
+    $matchCol = $header.IndexOf('Match')
+    $sourceCol = $header.IndexOf('Source')
+    if ($idCol -lt 0) { return @() }
+
+    $results = [System.Collections.Generic.List[PSCustomObject]]::new()
+    for ($i = $headerIndex + 2; $i -lt $lines.Count; $i++) {
+        $line = $lines[$i]
+        if ([string]::IsNullOrWhiteSpace($line)) { continue }
+        if ($line.Length -gt $idCol) {
+            $name = $line.Substring(0, [math]::Min($idCol, $line.Length)).Trim()
+
+            $endId = if ($verCol -gt $idCol) { $verCol } else { $line.Length }
+            $id = if ($line.Length -ge $endId) { $line.Substring($idCol, $endId - $idCol).Trim() } else { $line.Substring($idCol).Trim() }
+
+            $version = ''
+            if ($verCol -ge 0 -and $line.Length -gt $verCol) {
+                $endVer = if ($matchCol -gt $verCol) { $matchCol } elseif ($sourceCol -gt $verCol) { $sourceCol } else { $line.Length }
+                $version = if ($line.Length -ge $endVer) { $line.Substring($verCol, $endVer - $verCol).Trim() } else { $line.Substring($verCol).Trim() }
+            }
+
+            $source = if ($sourceCol -ge 0 -and $line.Length -gt $sourceCol) {
+                $line.Substring($sourceCol).Trim()
+            } else { 'winget' }
+
+            if ($id -and $id -notmatch '^[-]{3,}') {
+                $results.Add([PSCustomObject]@{
+                    Name = $name
+                    Id = $id
+                    Version = $version
+                    Source = $source
+                })
+            }
+        }
+    }
+    return $results
+}
+
+function Add-CustomWingetAppToQueue {
+    param(
+        [PSCustomObject]$Package
+    )
+
+    if (-not $Package -or -not $Package.Id) { return $null }
+
+    # 1. Se já existir nos 247 aplicativos padrão
+    $existing = $Global:AppCheckBoxes.Values | Where-Object { $_.App.Id -ieq $Package.Id }
+    if ($existing) {
+        $existing.CheckBox.IsChecked = $true
+        Update-SelectionSummary
+        [System.Windows.MessageBox]::Show("O aplicativo '$($existing.App.Name)' já está catalogado e foi selecionado na sua lista!", "Aplicativo Catalogado", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+        return $existing.App
+    }
+
+    # 2. Se já foi adicionado como personalizado anteriormente
+    $customKey = "WPFCustomApp_" + ($Package.Id -replace '[^a-zA-Z0-9]', '_')
+    if ($Global:AppCheckBoxes.ContainsKey($customKey)) {
+        $Global:AppCheckBoxes[$customKey].CheckBox.IsChecked = $true
+        Update-SelectionSummary
+        [System.Windows.MessageBox]::Show("O aplicativo '$($Package.Name)' já havia sido adicionado e foi remarcado na sua fila de instalação!", "Já Adicionado", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+        return $Global:AppCheckBoxes[$customKey].App
+    }
+
+    # 3. Cria o objeto customizado do aplicativo
+    $customApp = [PSCustomObject]@{
+        Key = $customKey
+        Id = $Package.Id
+        Name = $Package.Name
+        Category = "🌟 Aplicativos Personalizados (WinGet)"
+        RawCategory = "Custom"
+        Description = "Aplicativo adicionado via busca dinâmica no catálogo oficial WinGet (Versão: $($Package.Version), Origem: $($Package.Source))."
+        Link = "https://winget.run/pkg/$($Package.Id)"
+        IconUrl = ""
+        Foss = $false
+    }
+
+    # 4. Procura ou cria o Card de Categoria '🌟 Aplicativos Personalizados (WinGet)'
+    $customCardEntry = $Global:AppCategoryCards | Where-Object { $_.CategoryName -eq $customApp.Category }
+    $wrapPanel = $null
+
+    if (-not $customCardEntry) {
+        $card = New-Object System.Windows.Controls.Border
+        $card.SetResourceReference([System.Windows.Controls.Border]::BackgroundProperty, "BgCard")
+        $card.SetResourceReference([System.Windows.Controls.Border]::BorderBrushProperty, "BorderCard")
+        $card.BorderThickness = [System.Windows.Thickness]::new(1.5)
+        $card.CornerRadius = [System.Windows.CornerRadius]::new(8)
+        $card.Padding = [System.Windows.Thickness]::new(14)
+        $card.Margin = [System.Windows.Thickness]::new(0, 0, 0, 14)
+
+        $stack = New-Object System.Windows.Controls.StackPanel
+
+        $catTitle = New-Object System.Windows.Controls.TextBlock
+        $catTitle.Text = $customApp.Category
+        $catTitle.FontSize = 14
+        $catTitle.FontWeight = [System.Windows.FontWeights]::Bold
+        $catTitle.SetResourceReference([System.Windows.Controls.TextBlock]::ForegroundProperty, "AccentTitle3")
+        $catTitle.Margin = [System.Windows.Thickness]::new(0, 0, 0, 10)
+        $stack.Children.Add($catTitle) | Out-Null
+
+        $wrapPanel = New-Object System.Windows.Controls.WrapPanel
+        $stack.Children.Add($wrapPanel) | Out-Null
+        $card.Child = $stack
+
+        # Insere no topo do AppsContainer (logo no início da lista de apps)
+        $AppsContainer.Children.Insert(0, $card)
+
+        $cardAppEntries = [System.Collections.Generic.List[PSCustomObject]]::new()
+        $customCardEntry = [PSCustomObject]@{
+            Border = $card
+            TitleBlock = $catTitle
+            CategoryName = $customApp.Category
+            AppEntries = $cardAppEntries
+            WrapPanel = $wrapPanel
+        }
+        $Global:AppCategoryCards.Insert(0, $customCardEntry)
+
+        if ($CmbCategoryFilter -and -not ($CmbCategoryFilter.Items -contains $customApp.Category)) {
+            $CmbCategoryFilter.Items.Insert(1, $customApp.Category) | Out-Null
+        }
+    } else {
+        $wrapPanel = $customCardEntry.WrapPanel
+        if (-not $wrapPanel) {
+            $stack = $customCardEntry.Border.Child
+            $wrapPanel = $stack.Children[1]
+            $customCardEntry | Add-Member -MemberType NoteProperty -Name "WrapPanel" -Value $wrapPanel -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    # 5. Cria CheckBox para o novo app
+    $chk = New-Object System.Windows.Controls.CheckBox
+    $chk.Width = 330
+    $chk.Margin = [System.Windows.Thickness]::new(0, 4, 10, 6)
+    $chk.IsChecked = $true
+
+    $hPanel = New-Object System.Windows.Controls.StackPanel
+    $hPanel.Orientation = [System.Windows.Controls.Orientation]::Horizontal
+    $hPanel.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+
+    $badge = New-Object System.Windows.Controls.Border
+    $badge.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#1E3A8A")
+    $badge.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#3B82F6")
+    $badge.BorderThickness = [System.Windows.Thickness]::new(1)
+    $badge.CornerRadius = [System.Windows.CornerRadius]::new(4)
+    $badge.Padding = [System.Windows.Thickness]::new(4, 1, 4, 1)
+    $badge.Margin = [System.Windows.Thickness]::new(0, 0, 6, 0)
+    $badge.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+
+    $badgeText = New-Object System.Windows.Controls.TextBlock
+    $badgeText.Text = "WinGet"
+    $badgeText.FontSize = 9.5
+    $badgeText.FontWeight = [System.Windows.FontWeights]::Bold
+    $badgeText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#93C5FD")
+    $badge.Child = $badgeText
+    $hPanel.Children.Add($badge) | Out-Null
+
+    $nameBlock = New-Object System.Windows.Controls.TextBlock
+    $nameBlock.Text = $customApp.Name
+    $nameBlock.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+    $nameBlock.FontWeight = [System.Windows.FontWeights]::SemiBold
+    $hPanel.Children.Add($nameBlock) | Out-Null
+
+    $chk.Content = $hPanel
+    $chk.ToolTip = "$($customApp.Name)`n$($customApp.Description)`n`n• ID WinGet: $($customApp.Id)`n• Versão: $($Package.Version)"
+
+    $chk.Add_Checked({ Update-SelectionSummary })
+    $chk.Add_Unchecked({ Update-SelectionSummary })
+
+    $Global:AppCheckBoxes[$customApp.Key] = @{
+        CheckBox = $chk
+        App = $customApp
+    }
+
+    $customCardEntry.AppEntries.Add([PSCustomObject]@{
+        CheckBox = $chk
+        Name = $customApp.Name
+        Id = $customApp.Id
+        Key = $customApp.Key
+        Foss = $false
+        Description = $customApp.Description
+    })
+
+    $wrapPanel.Children.Add($chk) | Out-Null
+
+    # Atualiza lista de apps e contadores
+    Update-SelectionSummary
+    Write-GuiLog "Aplicativo '$($customApp.Name)' (ID: $($customApp.Id)) adicionado com sucesso à fila de instalação." "SUCCESS"
+    [System.Windows.MessageBox]::Show("Aplicativo '$($customApp.Name)' adicionado com sucesso!`n`nEle está disponível no topo da lista na categoria '🌟 Aplicativos Personalizados (WinGet)' e já foi marcado para instalação.", "Aplicativo Adicionado à Fila", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+
+    return $customApp
+}
+
+function Show-WingetSearchDialog {
+    [CmdletBinding()]
+    param(
+        [System.Windows.Window]$OwnerWindow,
+        [string]$InitialQuery = ""
+    )
+
+    $dialogXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Buscar Aplicativo no Catálogo WinGet"
+        Width="720" Height="540"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Border Background="#0F1117" BorderBrush="#282E3E" BorderThickness="1.5" CornerRadius="12">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <!-- Cabeçalho -->
+                <RowDefinition Height="Auto"/>
+                <!-- Barra de Busca -->
+                <RowDefinition Height="Auto"/>
+                <!-- Status da Busca -->
+                <RowDefinition Height="Auto"/>
+                <!-- Lista de Resultados -->
+                <RowDefinition Height="*"/>
+                <!-- Barra de Ações Inferior -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Cabeçalho -->
+            <Grid Grid.Row="0" Margin="0,0,0,14">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🌐" FontSize="22" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <StackPanel>
+                        <TextBlock Text="Buscar no Catálogo Oficial do WinGet" FontSize="16" FontWeight="Bold" Foreground="#F8FAFC"/>
+                        <TextBlock Text="Pesquise entre milhares de softwares oficiais verificados pela Microsoft e adicione à instalação:" FontSize="11" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Name="BtnDialogClose" Content="✕" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Foreground="#64748B" BorderThickness="0" FontSize="15" FontWeight="Bold" Cursor="Hand" Padding="8,2"/>
+            </Grid>
+
+            <!-- Barra de Busca -->
+            <Grid Grid.Row="1" Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#161922" BorderBrush="#282E3E" BorderThickness="1" CornerRadius="8" Padding="10,6" Margin="0,0,8,0">
+                    <Grid>
+                        <TextBox Name="TxtModalQuery" Background="Transparent" Foreground="#F8FAFC" BorderThickness="0" FontSize="13.5" VerticalContentAlignment="Center"/>
+                        <TextBlock Name="TxtModalPlaceholder" Text="Digite o nome do aplicativo (ex.: Spotify, Postman, Opera GX)..." Foreground="#64748B" IsHitTestVisible="False" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                    </Grid>
+                </Border>
+
+                <Button Name="BtnDoSearch" Grid.Column="1" Content="🔍 Pesquisar" Height="40" Padding="18,0" Background="#3B82F6" Foreground="#FFFFFF" FontWeight="Bold" FontSize="13" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="Brd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Brd" Property="Background" Value="#2563EB"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Brd" Property="Background" Value="#1E293B"/>
+                                    <Setter Property="Foreground" Value="#64748B"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            <!-- Status da Busca -->
+            <TextBlock Name="TxtSearchStatus" Grid.Row="2" Text="Digite um termo acima e clique em 'Pesquisar' (ou pressione Enter)." FontSize="11.5" Foreground="#94A3B8" Margin="2,0,0,8"/>
+
+            <!-- Lista de Resultados (ListView) -->
+            <Border Grid.Row="3" Background="#161922" BorderBrush="#282E3E" BorderThickness="1" CornerRadius="8" Margin="0,0,0,14" ClipToBounds="True">
+                <ListView Name="LstResults" Background="Transparent" BorderThickness="0" Foreground="#F8FAFC" FontSize="12.5" SelectionMode="Single">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nome do Aplicativo" Width="220" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="ID do Pacote (WinGet)" Width="240" DisplayMemberBinding="{Binding Id}"/>
+                            <GridViewColumn Header="Versão" Width="110" DisplayMemberBinding="{Binding Version}"/>
+                            <GridViewColumn Header="Origem" Width="85" DisplayMemberBinding="{Binding Source}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+
+            <!-- Barra Inferior de Ações -->
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Name="TxtSelectionDetail" Grid.Column="0" Text="Nenhum pacote selecionado." VerticalAlignment="Center" Foreground="#94A3B8" FontSize="11.5" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Name="BtnAddToQueue" Content="➕ Adicionar à Fila" Height="38" Padding="14,0" Background="#10B981" Foreground="#FFFFFF" FontWeight="Bold" FontSize="12.5" Cursor="Hand" Margin="0,0,8,0" IsEnabled="False">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Name="Brd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Brd" Property="Background" Value="#059669"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="Brd" Property="Background" Value="#1E293B"/>
+                                        <Setter Property="Foreground" Value="#64748B"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Name="BtnInstallNow" Content="⚡ Instalar Agora" Height="38" Padding="14,0" Background="#6366F1" Foreground="#FFFFFF" FontWeight="Bold" FontSize="12.5" Cursor="Hand" Margin="0,0,8,0" IsEnabled="False">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Name="Brd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Brd" Property="Background" Value="#4F46E5"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="Brd" Property="Background" Value="#1E293B"/>
+                                        <Setter Property="Foreground" Value="#64748B"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Name="BtnCloseModal" Content="Fechar" Height="38" Width="85" Background="#282E3E" Foreground="#E2E8F0" FontWeight="SemiBold" FontSize="12.5" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Name="Brd" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Brd" Property="Background" Value="#333C52"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
+"@
+
+    $stringReader = New-Object System.IO.StringReader($dialogXaml)
+    $xmlReader = [System.Xml.XmlReader]::Create($stringReader)
+    $dialog = [System.Windows.Markup.XamlReader]::Load($xmlReader)
+
+    if ($Global:Window.Icon) {
+        $dialog.Icon = $Global:Window.Icon
+    } elseif ($Global:AppLogoBitmap) {
+        $dialog.Icon = $Global:AppLogoBitmap
+    }
+
+    if ($OwnerWindow) {
+        $dialog.Owner = $OwnerWindow
+        $dialog.WindowStartupLocation = [System.Windows.WindowStartupLocation]::CenterOwner
+    }
+
+    $dialog.Add_MouseLeftButtonDown({
+        if ($_.ButtonState -eq [System.Windows.Input.MouseButtonState]::Pressed) {
+            $dialog.DragMove()
+        }
+    })
+
+    $txtQuery = $dialog.FindName("TxtModalQuery")
+    $txtPlaceholder = $dialog.FindName("TxtModalPlaceholder")
+    $btnSearch = $dialog.FindName("BtnDoSearch")
+    $txtStatus = $dialog.FindName("TxtSearchStatus")
+    $lstResults = $dialog.FindName("LstResults")
+    $txtDetail = $dialog.FindName("TxtSelectionDetail")
+    $btnAddToQueue = $dialog.FindName("BtnAddToQueue")
+    $btnInstallNow = $dialog.FindName("BtnInstallNow")
+    $btnClose = $dialog.FindName("BtnCloseModal")
+    $btnHeaderClose = $dialog.FindName("BtnDialogClose")
+
+    $txtQuery.Add_TextChanged({
+        if ($txtQuery.Text.Trim().Length -gt 0) {
+            $txtPlaceholder.Visibility = [System.Windows.Visibility]::Collapsed
+        } else {
+            $txtPlaceholder.Visibility = [System.Windows.Visibility]::Visible
+        }
+    })
+
+    $doSearchAction = {
+        $query = $txtQuery.Text.Trim()
+        if ([string]::IsNullOrWhiteSpace($query)) {
+            $txtStatus.Text = "⚠️ Por favor, digite o nome de um aplicativo para pesquisar."
+            $txtStatus.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#F59E0B")
+            return
+        }
+
+        $btnSearch.IsEnabled = $false
+        $btnSearch.Content = "⏳ Buscando..."
+        $txtStatus.Text = "⏳ Consultando catálogo oficial do WinGet para '$query'..."
+        $txtStatus.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#38BDF8")
+        Pump-GuiEvents
+
+        try {
+            $results = Search-WinGetPackages -Query $query
+            $lstResults.Items.Clear()
+
+            if ($results.Count -eq 0) {
+                $txtStatus.Text = "❌ Nenhum aplicativo encontrado para '$query'. Tente buscar por outro termo ou nome em inglês."
+                $txtStatus.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#F87171")
+            } else {
+                foreach ($r in $results) {
+                    $lstResults.Items.Add($r) | Out-Null
+                }
+                $txtStatus.Text = "✅ Encontrado(s) $($results.Count) aplicativo(s). Selecione um item na lista abaixo:"
+                $txtStatus.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
+            }
+        } catch {
+            $txtStatus.Text = "⚠️ Erro ao consultar o WinGet: $($_.Exception.Message)"
+            $txtStatus.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#F87171")
+        } finally {
+            $btnSearch.IsEnabled = $true
+            $btnSearch.Content = "🔍 Pesquisar"
+        }
+    }
+
+    $btnSearch.Add_Click($doSearchAction)
+
+    $txtQuery.Add_KeyDown({
+        if ($_.Key -eq [System.Windows.Input.Key]::Enter) {
+            & $doSearchAction
+        }
+    })
+
+    $lstResults.Add_SelectionChanged({
+        $selected = $lstResults.SelectedItem
+        if ($selected) {
+            $txtDetail.Text = "Selecionado: $($selected.Name) (ID: $($selected.Id))"
+            $txtDetail.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#60A5FA")
+            $btnAddToQueue.IsEnabled = $true
+            $btnInstallNow.IsEnabled = $true
+        } else {
+            $txtDetail.Text = "Nenhum pacote selecionado."
+            $txtDetail.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#94A3B8")
+            $btnAddToQueue.IsEnabled = $false
+            $btnInstallNow.IsEnabled = $false
+        }
+    })
+
+    $btnAddToQueue.Add_Click({
+        $selected = $lstResults.SelectedItem
+        if ($selected) {
+            $added = Add-CustomWingetAppToQueue -Package $selected
+            if ($added) {
+                $dialog.Close()
+            }
+        }
+    })
+
+    $btnInstallNow.Add_Click({
+        $selected = $lstResults.SelectedItem
+        if ($selected) {
+            $dialog.Close()
+
+            # Muda para aba de Console
+            $MainTabControl.SelectedIndex = 3
+
+            Write-GuiLog "=================================================" "INFO"
+            Write-GuiLog "INSTALAÇÃO AVULSA VIA WINGET: $($selected.Name)" "INFO"
+            Write-GuiLog "ID do Pacote: $($selected.Id)" "INFO"
+            Write-GuiLog "=================================================" "INFO"
+
+            Set-GuiStatus "Instalando $($selected.Name)..." 50
+
+            try {
+                $process = Start-Process cmd.exe -ArgumentList "/c winget install --id `"$($selected.Id)`" -e --silent --accept-package-agreements --accept-source-agreements --disable-interactivity" -NoNewWindow -PassThru
+                $exitCode = Wait-ProcessWithLiveFeedback -Process $process -TaskName "Instalando $($selected.Name)" -CurrentIndex 1 -TotalCount 1 -Percent 50
+
+                if ($exitCode -eq 0) {
+                    Write-GuiLog "$($selected.Name) instalado com sucesso via WinGet!" "SUCCESS"
+                    Set-GuiStatus "$($selected.Name) instalado com sucesso!" 100
+                } elseif ($exitCode -eq -1978335189 -or $exitCode -eq 2316632107) {
+                    Write-GuiLog "$($selected.Name) já se encontra instalado na versão mais recente." "SUCCESS"
+                    Set-GuiStatus "$($selected.Name) já atualizado!" 100
+                } else {
+                    Write-GuiLog "Aviso ao instalar $($selected.Name) (ExitCode: $exitCode)." "WARN"
+                    Set-GuiStatus "Instalação concluída com avisos." 100
+                }
+            } catch {
+                Write-GuiLog "Falha na execução do WinGet para $($selected.Name): $_" "ERROR"
+                Set-GuiStatus "Falha ao instalar $($selected.Name)." 0
+            }
+        }
+    })
+
+    $btnClose.Add_Click({ $dialog.Close() })
+    $btnHeaderClose.Add_Click({ $dialog.Close() })
+
+    if ($InitialQuery -and $InitialQuery.Trim().Length -gt 0) {
+        $txtQuery.Text = $InitialQuery.Trim()
+        $txtPlaceholder.Visibility = [System.Windows.Visibility]::Collapsed
+        $dialog.Add_Loaded({
+            & $doSearchAction
+        })
+    }
+
+    $dialog.ShowDialog() | Out-Null
+}
+
+if ($BtnSearchWingetApp) {
+    $BtnSearchWingetApp.Add_Click({
+        $initial = if ($TxtAppSearch) { $TxtAppSearch.Text.Trim() } else { "" }
+        Show-WingetSearchDialog -OwnerWindow $Global:Window -InitialQuery $initial
+    })
+}
+
+if ($BtnQuickWingetSearch) {
+    $BtnQuickWingetSearch.Add_Click({
+        $initial = if ($TxtAppSearch) { $TxtAppSearch.Text.Trim() } else { "" }
+        Show-WingetSearchDialog -OwnerWindow $Global:Window -InitialQuery $initial
+    })
+}
+
+if ($BtnPromptSearchWinget) {
+    $BtnPromptSearchWinget.Add_Click({
+        $initial = if ($TxtAppSearch) { $TxtAppSearch.Text.Trim() } else { "" }
+        Show-WingetSearchDialog -OwnerWindow $Global:Window -InitialQuery $initial
+    })
 }
 
 $BtnPresetKitAndyz0x.Add_Click({

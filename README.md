@@ -120,7 +120,16 @@ Além de instalar e otimizar, o utilitário permite desfazer qualquer ação com
 
 ---
 
-### 🛠️ 6. Auto-Reparo e Reinstalação do WinGet (App Installer)
+### 🌐 6. Busca Dinâmica no Catálogo Oficial WinGet
+Não encontrou o software desejado entre os 247 aplicativos padrão?
+- **Pesquisa em Tempo Real**: Clique no botão **`🌐 Buscar no WinGet`** (ou no atalho **`🌐 WinGet`** ao lado da barra de pesquisa de apps) para consultar diretamente o repositório oficial da Microsoft com mais de **10.000 softwares disponíveis**.
+- **Resultados Claros**: Visualize o Nome Oficial, ID do Pacote, Versão mais recente e Origem (`winget` ou `msstore`).
+- **➕ Adicionar à Fila de Instalação**: Insere o aplicativo em uma categoria destacada (*🌟 Aplicativos Personalizados*) no topo da lista para instalar junto com o resto do setup.
+- **⚡ Instalar Imediatamente**: Dispara a instalação silenciosa via WinGet na hora com feedback em tempo real no console!
+
+---
+
+### 🛠️ 7. Auto-Reparo e Reinstalação do WinGet (App Installer)
 Caso o computador recém-formatado ou uma ISO personalizada do Windows esteja com o **WinGet corrompido, desregistrado ou ausente**, o utilitário conta com proteção dupla:
 1. **Verificação Automática no Botão de Instalar**: Ao clicar em `🚀 Instalar / Aplicar`, o script testa a integridade do WinGet. Se detectar qualquer falha, ele repara automaticamente o ambiente em segundo plano (re-registra pacotes, baixa dependências oficiais `VCLibs` e `UI.Xaml`, reinstala o bundle `DesktopAppInstaller` via `aka.ms/getwinget` e redefine fontes) e **segue a instalação dos programas normalmente**.
 2. **Botão Dedicado `🛠️ Reparar WinGet`**: Posicionado diretamente na barra de ações rápidas da tela inicial e na aba de Ferramentas de Manutenção para reparo manual a qualquer momento em 1 clique.
