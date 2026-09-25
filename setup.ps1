@@ -1832,6 +1832,53 @@ function Update-SelectionSummary {
     }
 }
 
+function Reset-AllSelections {
+    [CmdletBinding()]
+    param(
+        [switch]$ResetRunButton
+    )
+
+    # 1. Desmarcar todos os aplicativos
+    if ($Global:AppCheckBoxes) {
+        foreach ($item in $Global:AppCheckBoxes.Values) {
+            $item.CheckBox.IsChecked = $false
+        }
+    }
+
+    # 2. Desmarcar todos os ajustes (tweaks)
+    if ($Global:TweakCheckBoxes) {
+        foreach ($t in $Global:TweakCheckBoxes.Values) {
+            $t.CheckBox.IsChecked = $false
+        }
+    }
+
+    # 3. Desmarcar recursos opcionais do Windows
+    if ($ChkFeatWsl) { $ChkFeatWsl.IsChecked = $false }
+    if ($ChkFeatHyperV) { $ChkFeatHyperV.IsChecked = $false }
+    if ($ChkFeatSandbox) { $ChkFeatSandbox.IsChecked = $false }
+    if ($ChkFeatDotNet) { $ChkFeatDotNet.IsChecked = $false }
+    if ($ChkFeatDirectPlay) { $ChkFeatDirectPlay.IsChecked = $false }
+
+    # 4. Desativar filtro "Apenas Selecionados" se estiver ativo para evitar lista vazia
+    if ($Global:SelectedOnlyActive) {
+        $Global:SelectedOnlyActive = $false
+        if ($BtnToggleSelectedOnly) {
+            $BtnToggleSelectedOnly.Background = $Global:Window.Resources["BtnSecondaryBg"]
+        }
+        Filter-Applications
+    }
+
+    # 5. Redefinir barra de progresso e atualizar resumos da interface
+    if ($ProgressBar) { $ProgressBar.Value = 0 }
+    Update-SelectionSummary
+
+    # 6. Resetar botão de instalação para o estado original
+    if ($ResetRunButton -and $BtnRun) {
+        $BtnRun.Content = "🚀 Instalar / Aplicar"
+        $BtnRun.IsEnabled = $true
+    }
+}
+
 # -------------------------------------------------------------------------
 # 9. SISTEMA DE LOGS E ATUALIZAÇÃO DA GUI
 # -------------------------------------------------------------------------
@@ -3634,6 +3681,16 @@ function Uninstall-SelectedApps {
     if ($BtnUninstallAppsTab) { $BtnUninstallAppsTab.IsEnabled = $true }
     if ($BtnRevertTweaksTab) { $BtnRevertTweaksTab.IsEnabled = $true }
 
+    # Desmarcar aplicativos desinstalados e resetar progresso
+    if ($Global:AppCheckBoxes) {
+        foreach ($item in $Global:AppCheckBoxes.Values) {
+            $item.CheckBox.IsChecked = $false
+        }
+    }
+    if ($ProgressBar) { $ProgressBar.Value = 0 }
+    Update-SelectionSummary
+    if ($MainTabControl) { $MainTabControl.SelectedIndex = 0 }
+
     [System.Windows.MessageBox]::Show("Processo de desinstalação concluído!", "Desinstalação Finalizada", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
 }
 
@@ -3749,6 +3806,16 @@ function Revert-SelectedTweaks {
     if ($BtnRevertTweaks) { $BtnRevertTweaks.IsEnabled = $true }
     if ($BtnUninstallAppsTab) { $BtnUninstallAppsTab.IsEnabled = $true }
     if ($BtnRevertTweaksTab) { $BtnRevertTweaksTab.IsEnabled = $true }
+
+    # Desmarcar ajustes restaurados e resetar progresso
+    if ($Global:TweakCheckBoxes) {
+        foreach ($t in $Global:TweakCheckBoxes.Values) {
+            $t.CheckBox.IsChecked = $false
+        }
+    }
+    if ($ProgressBar) { $ProgressBar.Value = 0 }
+    Update-SelectionSummary
+    if ($MainTabControl) { $MainTabControl.SelectedIndex = 1 }
 
     [System.Windows.MessageBox]::Show("Reversão concluída! Os ajustes selecionados foram restaurados para os valores padrão do Windows.", "Reversão Finalizada", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
 }
@@ -3926,30 +3993,49 @@ $BtnRun.Add_Click({
 
     $BtnRun.IsEnabled = $false
     $BtnRun.Content = "⏳ Processando..."
+    if ($BtnUninstallApps) { $BtnUninstallApps.IsEnabled = $false }
+    if ($BtnRevertTweaks) { $BtnRevertTweaks.IsEnabled = $false }
+    if ($BtnUninstallAppsTab) { $BtnUninstallAppsTab.IsEnabled = $false }
+    if ($BtnRevertTweaksTab) { $BtnRevertTweaksTab.IsEnabled = $false }
 
     # Muda para a aba de Console
     $MainTabControl.SelectedIndex = 3
 
     Set-GuiStatus "Iniciando processamento das seleções..." 0
 
-    # 1. Aplicar Tweaks de Sistema
-    Apply-SelectedTweaks
+    try {
+        # 1. Aplicar Tweaks de Sistema
+        Apply-SelectedTweaks
 
-    # 2. Habilitar Recursos do Windows
-    Apply-SelectedFeatures
+        # 2. Habilitar Recursos do Windows
+        Apply-SelectedFeatures
 
-    # 3. Instalar Aplicativos via WinGet
-    Install-SelectedApps
+        # 3. Instalar Aplicativos via WinGet
+        Install-SelectedApps
 
-    Set-GuiStatus "Todas as operações foram finalizadas com sucesso!" 100
-    Write-GuiLog "=================================================" "SUCCESS"
-    Write-GuiLog "CONFIGURAÇÃO PÓS-FORMATAÇÃO FINALIZADA COM SUCESSO!" "SUCCESS"
-    Write-GuiLog "=================================================" "SUCCESS"
+        Set-GuiStatus "Todas as operações foram finalizadas com sucesso!" 100
+        Write-GuiLog "=================================================" "SUCCESS"
+        Write-GuiLog "CONFIGURAÇÃO PÓS-FORMATAÇÃO FINALIZADA COM SUCESSO!" "SUCCESS"
+        Write-GuiLog "=================================================" "SUCCESS"
 
-    $BtnRun.IsEnabled = $true
-    $BtnRun.Content = "✔️ Concluído"
-    # Modal Moderno de Agradecimento & Buy Me a Coffee
-    Show-CompletionDialog -AppCount $appCount -TweakCount $tweakCount -FeatCount $featCount -OwnerWindow $Global:Window
+        $BtnRun.Content = "✔️ Concluído"
+
+        # Modal Moderno de Agradecimento & Buy Me a Coffee
+        Show-CompletionDialog -AppCount $appCount -TweakCount $tweakCount -FeatCount $featCount -OwnerWindow $Global:Window
+    } finally {
+        # Resetar todas as seleções (apps, tweaks, recursos) e restaurar o botão de instalação
+        Reset-AllSelections -ResetRunButton
+        if ($BtnUninstallApps) { $BtnUninstallApps.IsEnabled = $true }
+        if ($BtnRevertTweaks) { $BtnRevertTweaks.IsEnabled = $true }
+        if ($BtnUninstallAppsTab) { $BtnUninstallAppsTab.IsEnabled = $true }
+        if ($BtnRevertTweaksTab) { $BtnRevertTweaksTab.IsEnabled = $true }
+
+        # Retorna para a aba de Aplicativos para permitir novas seleções imediatamente
+        if ($MainTabControl) {
+            $MainTabControl.SelectedIndex = 0
+        }
+        Write-GuiLog "Seleções e botão redefinidos. Pronto para novas instalações!" "INFO"
+    }
 })
 
 # -------------------------------------------------------------------------
