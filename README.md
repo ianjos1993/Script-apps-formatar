@@ -34,7 +34,7 @@ curl.exe -sL https://unbk.com.br/setup | powershell -NoProfile -ExecutionPolicy 
 
 ---
 
-Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **263 softwares oficiais** via **WinGet** e instaladores dedicados (como **Amazon Games**, **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **SignalRGB**, **Google Drive**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**, ambos com seletor interativo de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
+Desenvolvido por **Igor Anjos**, o utilitário reúne um catálogo completo de **264 softwares oficiais** via **WinGet** e instaladores dedicados (como **Amazon Games**, **NVIDIA App**, **AMD Software: Adrenalin Edition**, **Hydra Launcher**, **SignalRGB**, **Google Drive**, **Kaspersky** e **ExitLag**), **66 ajustes finos de sistema**, presets de 1 clique (**Kit Andyz0x** e **Pack PC Gamer**, ambos com seletor interativo de GPU), **5 Temas Visuais Dinâmicos**, recursos de **Desinstalação de Aplicativos** e **Reversão de Tweaks** — **100% em Português (Brasil)**, com **Ícones oficiais** de cada software e **Destaque nítido para softwares de Código Aberto (FOSS)**.
 
 ---
 
@@ -121,7 +121,7 @@ Além de instalar e otimizar, o utilitário permite desfazer qualquer ação com
 ---
 
 ### 🌐 6. Busca Dinâmica no Catálogo Oficial WinGet
-Não encontrou o software desejado entre os 263 aplicativos padrão?
+Não encontrou o software desejado entre os 264 aplicativos padrão?
 - **Pesquisa em Tempo Real**: Clique no botão **`🌐 Buscar no WinGet`** (ou no atalho **`🌐 WinGet`** ao lado da barra de pesquisa de apps) para consultar diretamente o repositório oficial da Microsoft com mais de **10.000 softwares disponíveis**.
 - **Resultados Claros**: Visualize o Nome Oficial, ID do Pacote, Versão mais recente e Origem (`winget` ou `msstore`).
 - **➕ Adicionar à Fila de Instalação**: Insere o aplicativo em uma categoria destacada (*🌟 Aplicativos Personalizados*) no topo da lista para instalar junto com o resto do setup.
@@ -136,7 +136,7 @@ Caso o computador recém-formatado ou uma ISO personalizada do Windows esteja co
 
 ---
 
-## 📦 Visão Geral do Catálogo (263 Softwares)
+## 📦 Visão Geral do Catálogo (264 Softwares)
 
 - 🌐 **Navegadores**: Brave, Chrome, Firefox, Edge, Opera, Opera GX, Tor, Vivaldi, LibreWolf, Floorp, Waterfox, Zen Browser, Chromium.
 - 💬 **Comunicação**: Discord, Telegram, WhatsApp Desktop, WhatsApp Beta, Slack, Teams, Signal, Zoom, Skype, Thunderbird, BetterDiscord, Vencord, Element.
@@ -147,7 +147,7 @@ Caso o computador recém-formatado ou uma ISO personalizada do Windows esteja co
 - 🧰 **Ferramentas Microsoft**: PowerToys, Windows Terminal, Sysinternals Suite, AutoRuns, Process Explorer, Visual C++ Redistributables (AIO), DirectX End-User Runtime.
 - 🛠️ **Utilitários do Sistema**: **Windhawk**, **SignalRGB**, NanaZip, 7-Zip, WinRAR, PeaZip, Notepad++, ShareX, Lightshot, FlameShot, AnyDesk, TeamViewer, RustDesk, Rufus, BalenaEtcher, Ventoy, CPU-Z, GPU-Z, HWMonitor, CrystalDiskInfo, CrystalDiskMark, TreeSize Free, BleachBit, Everything, Revo Uninstaller, AutoHotkey, WizTree.
 
-- ⚡ **Ferramentas Pro & Redes**: Wireshark, Nmap, Putty, WinSCP, FileZilla, Advanced IP Scanner, Process Hacker, gsudo, NVCleanstall, MSI Afterburner.
+- ⚡ **Ferramentas Pro & Redes**: **OCCT**, Wireshark, Nmap, Putty, WinSCP, FileZilla, Advanced IP Scanner, Process Hacker, gsudo, NVCleanstall, MSI Afterburner.
 - ☁️ **Ferramentas Self-Hosted**: Tailscale, Cloudflare WARP, ZeroTier, LocalSend, Kodi, Jellyfin.
 
 ---
@@ -204,7 +204,7 @@ Participe da nossa comunidade no Discord e fale diretamente conosco:
 
 ## ☕ Considere Apoiar o Nosso Projeto
 
-Se este utilitário economizou seu tempo, facilitou a configuração do seu computador ou foi útil para você, considere apoiar o projeto com um café! Sua contribuição nos ajuda a manter a lista de mais de 263 softwares sempre atualizada, testar novas otimizações e continuar trazendo melhorias.
+Se este utilitário economizou seu tempo, facilitou a configuração do seu computador ou foi útil para você, considere apoiar o projeto com um café! Sua contribuição nos ajuda a manter a lista de mais de 264 softwares sempre atualizada, testar novas otimizações e continuar trazendo melhorias.
 
 <p align="left">
   <a href="https://buymeacoffee.com/ianjos1993" target="_blank">
