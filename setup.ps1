@@ -3489,15 +3489,87 @@ function Repair-WinGet {
     }
 }
 
+function Get-OPAutoClickerExecutablePath {
+    $candidates = @(
+        (Join-Path $env:ProgramFiles "OPAutoClicker\AutoClicker.exe"),
+        (Join-Path $env:LOCALAPPDATA "Microsoft\WinGet\Links\opautoclicker.exe"),
+        (Join-Path $env:LOCALAPPDATA "Microsoft\WindowsApps\opautoclicker.exe")
+    )
+
+    foreach ($candidate in $candidates) {
+        if ($candidate -and (Test-Path $candidate)) {
+            return $candidate
+        }
+    }
+
+    try {
+        $command = Get-Command opautoclicker -ErrorAction SilentlyContinue
+        if ($command -and $command.Source -and (Test-Path $command.Source)) {
+            return $command.Source
+        }
+    } catch {}
+
+    try {
+        $packagesRoot = Join-Path $env:LOCALAPPDATA "Microsoft\WinGet\Packages"
+        if (Test-Path $packagesRoot) {
+            $packageExe = Get-ChildItem -Path $packagesRoot -Filter "AutoClicker.exe" -File -Recurse -ErrorAction SilentlyContinue |
+                Where-Object { $_.FullName -like "*OPAutoClicker.OPAutoClicker*" } |
+                Select-Object -First 1 -ExpandProperty FullName
+            if ($packageExe -and (Test-Path $packageExe)) {
+                return $packageExe
+            }
+        }
+    } catch {}
+
+    return $null
+}
+
+function New-OPAutoClickerShortcuts {
+    param(
+        [string]$TargetExe
+    )
+
+    try {
+        if (-not $TargetExe) {
+            $TargetExe = Get-OPAutoClickerExecutablePath
+        }
+
+        if (-not $TargetExe -or -not (Test-Path $TargetExe)) {
+            Write-GuiLog "OPAutoClicker foi instalado, mas não foi possível localizar o executável para criar os atalhos." "WARN"
+            Write-GuiLog "Você ainda pode tentar abrir pelo comando: opautoclicker" "INFO"
+            return $false
+        }
+
+        $workingDirectory = Split-Path -Parent $TargetExe
+        $commonStartMenuShortcut = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+        $userStartMenuShortcut = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+        $desktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) "OP Auto Clicker.lnk"
+
+        $wshShell = New-Object -ComObject WScript.Shell
+        foreach ($shortcutPath in @($commonStartMenuShortcut, $userStartMenuShortcut, $desktopShortcut)) {
+            $shortcut = $wshShell.CreateShortcut($shortcutPath)
+            $shortcut.TargetPath = $TargetExe
+            $shortcut.WorkingDirectory = $workingDirectory
+            $shortcut.IconLocation = "$TargetExe,0"
+            $shortcut.Description = "OP Auto Clicker 4.1"
+            $shortcut.Save()
+        }
+
+        Write-GuiLog "OPAutoClicker disponível em: $TargetExe" "INFO"
+        Write-GuiLog "Atalhos do OP Auto Clicker criados no Menu Iniciar e na Área de Trabalho." "SUCCESS"
+        return $true
+    } catch {
+        Write-GuiLog "Aviso ao criar atalhos do OPAutoClicker: $_" "WARN"
+        return $false
+    }
+}
+
 function Install-OPAutoClickerPortableFallback {
     $downloadUrl = "https://sourceforge.net/projects/orphamielautoclicker/files/4.1/AutoClicker.exe/download"
     $expectedSha256 = "1CE7DA6F2813C2AD1D2E496BE6714E08CD618E6D9FE2DF26C2BD4D894C9A6EC1"
     $tempFile = Join-Path $env:TEMP "OPAutoClicker-4.1.exe"
     $installDir = Join-Path $env:ProgramFiles "OPAutoClicker"
     $targetExe = Join-Path $installDir "AutoClicker.exe"
-    $commonStartMenuShortcut = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
-    $userStartMenuShortcut = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
-    $desktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) "OP Auto Clicker.lnk"
 
     try {
         Write-GuiLog "WinGet indisponível para OPAutoClicker. Acionando fallback portátil oficial..." "WARN"
@@ -3519,19 +3591,9 @@ function Install-OPAutoClickerPortableFallback {
         New-Item -ItemType Directory -Path $installDir -Force | Out-Null
         Copy-Item -Path $tempFile -Destination $targetExe -Force -ErrorAction Stop
 
-        $wshShell = New-Object -ComObject WScript.Shell
-        foreach ($shortcutPath in @($commonStartMenuShortcut, $userStartMenuShortcut, $desktopShortcut)) {
-            $shortcut = $wshShell.CreateShortcut($shortcutPath)
-            $shortcut.TargetPath = $targetExe
-            $shortcut.WorkingDirectory = $installDir
-            $shortcut.IconLocation = "$targetExe,0"
-            $shortcut.Description = "OP Auto Clicker 4.1"
-            $shortcut.Save()
-        }
+        New-OPAutoClickerShortcuts -TargetExe $targetExe | Out-Null
 
         Write-GuiLog "OPAutoClicker 4.1 instalado pelo fallback portátil e validado por SHA-256." "SUCCESS"
-        Write-GuiLog "Executável: $targetExe" "INFO"
-        Write-GuiLog "Atalhos criados no Menu Iniciar e na Área de Trabalho." "SUCCESS"
         return $true
     } catch {
         Write-GuiLog "Falha no fallback portátil do OPAutoClicker: $_" "ERROR"
@@ -3654,9 +3716,15 @@ function Install-SelectedApps {
             if ($exitCode -eq 0) {
                 $successCount++
                 Write-GuiLog "$($app.Name) instalado com sucesso!" "SUCCESS"
+                if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
+                    New-OPAutoClickerShortcuts | Out-Null
+                }
             } elseif ($exitCode -eq -1978335189 -or $exitCode -eq 2316632107) {
                 $successCount++
                 Write-GuiLog "$($app.Name) já se encontra na versão mais recente." "SUCCESS"
+                if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
+                    New-OPAutoClickerShortcuts | Out-Null
+                }
             } elseif ($exitCode -eq -1978335123 -or $exitCode -eq 2316632173) {
                 if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
                     if (Install-OPAutoClickerPortableFallback) {
