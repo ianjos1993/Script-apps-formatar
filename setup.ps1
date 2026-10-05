@@ -3495,7 +3495,9 @@ function Install-OPAutoClickerPortableFallback {
     $tempFile = Join-Path $env:TEMP "OPAutoClicker-4.1.exe"
     $installDir = Join-Path $env:ProgramFiles "OPAutoClicker"
     $targetExe = Join-Path $installDir "AutoClicker.exe"
-    $shortcutPath = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+    $commonStartMenuShortcut = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+    $userStartMenuShortcut = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+    $desktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) "OP Auto Clicker.lnk"
 
     try {
         Write-GuiLog "WinGet indisponível para OPAutoClicker. Acionando fallback portátil oficial..." "WARN"
@@ -3518,13 +3520,18 @@ function Install-OPAutoClickerPortableFallback {
         Copy-Item -Path $tempFile -Destination $targetExe -Force -ErrorAction Stop
 
         $wshShell = New-Object -ComObject WScript.Shell
-        $shortcut = $wshShell.CreateShortcut($shortcutPath)
-        $shortcut.TargetPath = $targetExe
-        $shortcut.WorkingDirectory = $installDir
-        $shortcut.Description = "OP Auto Clicker 4.1"
-        $shortcut.Save()
+        foreach ($shortcutPath in @($commonStartMenuShortcut, $userStartMenuShortcut, $desktopShortcut)) {
+            $shortcut = $wshShell.CreateShortcut($shortcutPath)
+            $shortcut.TargetPath = $targetExe
+            $shortcut.WorkingDirectory = $installDir
+            $shortcut.IconLocation = "$targetExe,0"
+            $shortcut.Description = "OP Auto Clicker 4.1"
+            $shortcut.Save()
+        }
 
         Write-GuiLog "OPAutoClicker 4.1 instalado pelo fallback portátil e validado por SHA-256." "SUCCESS"
+        Write-GuiLog "Executável: $targetExe" "INFO"
+        Write-GuiLog "Atalhos criados no Menu Iniciar e na Área de Trabalho." "SUCCESS"
         return $true
     } catch {
         Write-GuiLog "Falha no fallback portátil do OPAutoClicker: $_" "ERROR"
@@ -3745,9 +3752,13 @@ function Uninstall-SelectedApps {
             $portableDir = Join-Path $env:ProgramFiles "OPAutoClicker"
             $portableExe = Join-Path $portableDir "AutoClicker.exe"
             $portableShortcut = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+            $portableUserShortcut = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+            $portableDesktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) "OP Auto Clicker.lnk"
             if (Test-Path $portableExe) {
                 try {
                     Remove-Item $portableShortcut -Force -ErrorAction SilentlyContinue
+                    Remove-Item $portableUserShortcut -Force -ErrorAction SilentlyContinue
+                    Remove-Item $portableDesktopShortcut -Force -ErrorAction SilentlyContinue
                     Remove-Item $portableDir -Recurse -Force -ErrorAction Stop
                     Write-GuiLog "OPAutoClicker portátil removido com sucesso!" "SUCCESS"
                 } catch {
