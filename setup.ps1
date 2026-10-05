@@ -3494,7 +3494,7 @@ function Install-SelectedApps {
         }
     }
 
-    if ($selectedApps.Count -eq 0) { return }
+    if ($selectedApps.Count -eq 0) { return $true }
 
     # Verificação inteligente de integridade do WinGet
     $requiresWinget = ($selectedApps | Where-Object { -not $_.DownloadUrl }).Count -gt 0
@@ -3517,6 +3517,8 @@ function Install-SelectedApps {
     Write-GuiLog "=================================================" "INFO"
 
     $curr = 0
+    $successCount = 0
+    $failureCount = 0
     foreach ($app in $selectedApps) {
         $curr++
         $percent = [math]::Round(($curr / $total) * 100)
@@ -3545,9 +3547,16 @@ function Install-SelectedApps {
                 Write-GuiLog "Executando instalador de $($app.Name)..." "INFO"
                 $args = if ($app.InstallArgs) { $app.InstallArgs } else { "/SILENT /VERYSILENT /NORESTART" }
                 $process = Start-Process -FilePath $installerPath -ArgumentList $args -PassThru -Wait
-                Write-GuiLog "$($app.Name) instalado com sucesso!" "SUCCESS"
+                if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 1641 -or $process.ExitCode -eq 3010) {
+                    $successCount++
+                    Write-GuiLog "$($app.Name) instalado com sucesso!" "SUCCESS"
+                } else {
+                    $failureCount++
+                    Write-GuiLog "Falha ao instalar $($app.Name) (ExitCode: $($process.ExitCode))." "ERROR"
+                }
             } catch {
-                Write-GuiLog "Aviso ao instalar $($app.Name): $_" "WARN"
+                $failureCount++
+                Write-GuiLog "Falha ao instalar $($app.Name): $_" "ERROR"
             }
             Pump-GuiEvents
             continue
@@ -3564,24 +3573,51 @@ function Install-SelectedApps {
             } else {
                 "/c winget install --id `"$pkgId`" -e --silent --accept-package-agreements --accept-source-agreements --disable-interactivity"
             }
-            $process = Start-Process cmd.exe -ArgumentList $wingetArgs -NoNewWindow -PassThru
-            $exitCode = Wait-ProcessWithLiveFeedback -Process $process -TaskName "Instalando $($app.Name)" -CurrentIndex $curr -TotalCount $total -Percent $percent
+            $attempt = 0
+            do {
+                $attempt++
+                $process = Start-Process cmd.exe -ArgumentList $wingetArgs -NoNewWindow -PassThru
+                $exitCode = Wait-ProcessWithLiveFeedback -Process $process -TaskName "Instalando $($app.Name)" -CurrentIndex $curr -TotalCount $total -Percent $percent
+
+                if (($exitCode -eq -1978335123 -or $exitCode -eq 2316632173) -and $attempt -lt 2) {
+                    Write-GuiLog "WinGet retornou 0x8A15006D para $($app.Name). Serviço ocupado/indisponível; repetindo a tentativa em 3 segundos..." "WARN"
+                    Start-Sleep -Seconds 3
+                    Pump-GuiEvents
+                    continue
+                }
+
+                break
+            } while ($attempt -lt 2)
 
             if ($exitCode -eq 0) {
+                $successCount++
                 Write-GuiLog "$($app.Name) instalado com sucesso!" "SUCCESS"
             } elseif ($exitCode -eq -1978335189 -or $exitCode -eq 2316632107) {
+                $successCount++
                 Write-GuiLog "$($app.Name) já se encontra na versão mais recente." "SUCCESS"
+            } elseif ($exitCode -eq -1978335123 -or $exitCode -eq 2316632173) {
+                $failureCount++
+                Write-GuiLog "Falha ao instalar $($app.Name): WinGet retornou 0x8A15006D (serviço necessário ocupado ou indisponível). Tente novamente em alguns instantes." "ERROR"
             } else {
-                Write-GuiLog "Aviso ao instalar $($app.Name) (ExitCode: $exitCode)." "WARN"
+                $failureCount++
+                Write-GuiLog "Falha ao instalar $($app.Name) (ExitCode: $exitCode)." "ERROR"
             }
         } catch {
+            $failureCount++
             Write-GuiLog "Falha na execução do WinGet para $($app.Name): $_" "ERROR"
         }
 
         Pump-GuiEvents
     }
 
-    Write-GuiLog "Instalação de aplicativos finalizada!" "SUCCESS"
+    if ($failureCount -eq 0) {
+        Write-GuiLog "Instalação de aplicativos finalizada com sucesso! ($successCount/$total)" "SUCCESS"
+        return $true
+    }
+
+    Write-GuiLog "Instalação de aplicativos finalizada com falhas: $failureCount de $total aplicativo(s) não foram instalados." "ERROR"
+    Set-GuiStatus "Instalação concluída com $failureCount falha(s)." 100
+    return $false
 }
 
 # -------------------------------------------------------------------------
@@ -4011,7 +4047,18 @@ $BtnRun.Add_Click({
         Apply-SelectedFeatures
 
         # 3. Instalar Aplicativos via WinGet
-        Install-SelectedApps
+        $appInstallOk = Install-SelectedApps
+
+        if (-not $appInstallOk) {
+            Set-GuiStatus "Operações finalizadas com falhas na instalação de aplicativos." 100
+            Write-GuiLog "=================================================" "ERROR"
+            Write-GuiLog "CONFIGURAÇÃO PÓS-FORMATAÇÃO FINALIZADA COM FALHAS!" "ERROR"
+            Write-GuiLog "Confira as mensagens acima para identificar os aplicativos que não foram instalados." "WARN"
+            Write-GuiLog "=================================================" "ERROR"
+            $BtnRun.Content = "⚠️ Concluído com erros"
+            [System.Windows.MessageBox]::Show("A configuração terminou, mas um ou mais aplicativos não foram instalados.`n`nConfira a aba Console para ver o erro de cada aplicativo.", "Instalação concluída com falhas", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+            return
+        }
 
         Set-GuiStatus "Todas as operações foram finalizadas com sucesso!" 100
         Write-GuiLog "=================================================" "SUCCESS"
