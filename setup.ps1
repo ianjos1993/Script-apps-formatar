@@ -2017,8 +2017,18 @@ function Wait-ProcessWithLiveFeedback {
     }
 
     $sw.Stop()
+    $exitCode = $null
+    try {
+        # Garante que o handle do processo tenha sido atualizado antes de ler ExitCode.
+        # Sem WaitForExit/Refresh, Start-Process pode ocasionalmente deixar ExitCode vazio.
+        $Process.WaitForExit()
+        $Process.Refresh()
+        $exitCode = [int]$Process.ExitCode
+    } catch {
+        $exitCode = $null
+    }
     Update-LiveBanner -TaskName $TaskName -Detail "Finalizado" -ElapsedSeconds ([math]::Round($sw.Elapsed.TotalSeconds)) -IsActive $false
-    return $Process.ExitCode
+    return $exitCode
 }
 
 function Set-GuiStatus {
@@ -3479,6 +3489,51 @@ function Repair-WinGet {
     }
 }
 
+function Install-OPAutoClickerPortableFallback {
+    $downloadUrl = "https://sourceforge.net/projects/orphamielautoclicker/files/4.1/AutoClicker.exe/download"
+    $expectedSha256 = "1CE7DA6F2813C2AD1D2E496BE6714E08CD618E6D9FE2DF26C2BD4D894C9A6EC1"
+    $tempFile = Join-Path $env:TEMP "OPAutoClicker-4.1.exe"
+    $installDir = Join-Path $env:ProgramFiles "OPAutoClicker"
+    $targetExe = Join-Path $installDir "AutoClicker.exe"
+    $shortcutPath = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+
+    try {
+        Write-GuiLog "WinGet indisponível para OPAutoClicker. Acionando fallback portátil oficial..." "WARN"
+        Set-GuiStatus "Baixando OPAutoClicker pelo fallback oficial..." 95
+
+        Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+        $headers = @{ "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $tempFile -Headers $headers -UseBasicParsing -MaximumRedirection 10 -ErrorAction Stop
+
+        if (-not (Test-Path $tempFile) -or (Get-Item $tempFile).Length -lt 100KB) {
+            throw "O arquivo baixado é inválido ou muito pequeno."
+        }
+
+        $actualSha256 = (Get-FileHash -Path $tempFile -Algorithm SHA256 -ErrorAction Stop).Hash.ToUpperInvariant()
+        if ($actualSha256 -ne $expectedSha256) {
+            throw "SHA-256 inválido. Esperado: $expectedSha256 | Obtido: $actualSha256"
+        }
+
+        New-Item -ItemType Directory -Path $installDir -Force | Out-Null
+        Copy-Item -Path $tempFile -Destination $targetExe -Force -ErrorAction Stop
+
+        $wshShell = New-Object -ComObject WScript.Shell
+        $shortcut = $wshShell.CreateShortcut($shortcutPath)
+        $shortcut.TargetPath = $targetExe
+        $shortcut.WorkingDirectory = $installDir
+        $shortcut.Description = "OP Auto Clicker 4.1"
+        $shortcut.Save()
+
+        Write-GuiLog "OPAutoClicker 4.1 instalado pelo fallback portátil e validado por SHA-256." "SUCCESS"
+        return $true
+    } catch {
+        Write-GuiLog "Falha no fallback portátil do OPAutoClicker: $_" "ERROR"
+        return $false
+    } finally {
+        Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+    }
+}
+
 function Install-SelectedApps {
     $windowsAppsPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
     if (Test-Path $windowsAppsPath) {
@@ -3596,8 +3651,19 @@ function Install-SelectedApps {
                 $successCount++
                 Write-GuiLog "$($app.Name) já se encontra na versão mais recente." "SUCCESS"
             } elseif ($exitCode -eq -1978335123 -or $exitCode -eq 2316632173) {
+                if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
+                    if (Install-OPAutoClickerPortableFallback) {
+                        $successCount++
+                    } else {
+                        $failureCount++
+                    }
+                } else {
+                    $failureCount++
+                    Write-GuiLog "Falha ao instalar $($app.Name): WinGet retornou 0x8A15006D (serviço necessário ocupado ou indisponível). Tente novamente em alguns instantes." "ERROR"
+                }
+            } elseif ($null -eq $exitCode) {
                 $failureCount++
-                Write-GuiLog "Falha ao instalar $($app.Name): WinGet retornou 0x8A15006D (serviço necessário ocupado ou indisponível). Tente novamente em alguns instantes." "ERROR"
+                Write-GuiLog "Falha ao instalar $($app.Name): não foi possível obter o ExitCode do processo WinGet." "ERROR"
             } else {
                 $failureCount++
                 Write-GuiLog "Falha ao instalar $($app.Name) (ExitCode: $exitCode)." "ERROR"
@@ -3674,6 +3740,23 @@ function Uninstall-SelectedApps {
         $percent = [math]::Round(($curr / $total) * 100)
         Set-GuiStatus "Desinstalando [$curr de $total]: $($app.Name)..." $percent
         Write-GuiLog "[$curr/$total] Tentando desinstalar $($app.Name) (ID: $($app.Id))..." "INFO"
+
+        if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
+            $portableDir = Join-Path $env:ProgramFiles "OPAutoClicker"
+            $portableExe = Join-Path $portableDir "AutoClicker.exe"
+            $portableShortcut = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\OP Auto Clicker.lnk"
+            if (Test-Path $portableExe) {
+                try {
+                    Remove-Item $portableShortcut -Force -ErrorAction SilentlyContinue
+                    Remove-Item $portableDir -Recurse -Force -ErrorAction Stop
+                    Write-GuiLog "OPAutoClicker portátil removido com sucesso!" "SUCCESS"
+                } catch {
+                    Write-GuiLog "Falha ao remover OPAutoClicker portátil: $_" "ERROR"
+                }
+                Pump-GuiEvents
+                continue
+            }
+        }
 
         try {
             $isMsStore = $app.Id -like "msstore:*"
