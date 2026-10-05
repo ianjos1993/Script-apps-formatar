@@ -3547,6 +3547,10 @@ function New-OPAutoClickerShortcuts {
 
         $wshShell = New-Object -ComObject WScript.Shell
         foreach ($shortcutPath in @($commonStartMenuShortcut, $userStartMenuShortcut, $desktopShortcut)) {
+            $shortcutDir = Split-Path $shortcutPath -Parent
+            if (-not (Test-Path $shortcutDir)) {
+                New-Item -ItemType Directory -Path $shortcutDir -Force | Out-Null
+            }
             $shortcut = $wshShell.CreateShortcut($shortcutPath)
             $shortcut.TargetPath = $TargetExe
             $shortcut.WorkingDirectory = $workingDirectory
@@ -3564,39 +3568,53 @@ function New-OPAutoClickerShortcuts {
     }
 }
 
-function Install-OPAutoClickerPortableFallback {
-    $downloadUrl = "https://sourceforge.net/projects/orphamielautoclicker/files/4.1/AutoClicker.exe/download"
+function Install-OPAutoClickerPortable {
+    $downloadUrl = "https://sourceforge.net/projects/orphamielautoclicker/files/4.1/AutoClicker.exe"
     $expectedSha256 = "1CE7DA6F2813C2AD1D2E496BE6714E08CD618E6D9FE2DF26C2BD4D894C9A6EC1"
     $tempFile = Join-Path $env:TEMP "OPAutoClicker-4.1.exe"
     $installDir = Join-Path $env:ProgramFiles "OPAutoClicker"
     $targetExe = Join-Path $installDir "AutoClicker.exe"
 
     try {
-        Write-GuiLog "WinGet indisponível para OPAutoClicker. Acionando fallback portátil oficial..." "WARN"
-        Set-GuiStatus "Baixando OPAutoClicker pelo fallback oficial..." 95
-
-        Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
-        $headers = @{ "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $tempFile -Headers $headers -UseBasicParsing -MaximumRedirection 10 -ErrorAction Stop
-
-        if (-not (Test-Path $tempFile) -or (Get-Item $tempFile).Length -lt 100KB) {
-            throw "O arquivo baixado é inválido ou muito pequeno."
-        }
-
-        $actualSha256 = (Get-FileHash -Path $tempFile -Algorithm SHA256 -ErrorAction Stop).Hash.ToUpperInvariant()
-        if ($actualSha256 -ne $expectedSha256) {
-            throw "SHA-256 inválido. Esperado: $expectedSha256 | Obtido: $actualSha256"
-        }
-
+        Write-GuiLog "Instalando OPAutoClicker 4.1 em caminho fixo..." "INFO"
         New-Item -ItemType Directory -Path $installDir -Force | Out-Null
-        Copy-Item -Path $tempFile -Destination $targetExe -Force -ErrorAction Stop
+
+        $existingFileIsValid = $false
+        if (Test-Path $targetExe) {
+            try {
+                $existingHash = (Get-FileHash -Path $targetExe -Algorithm SHA256 -ErrorAction Stop).Hash.ToUpperInvariant()
+                $existingFileIsValid = ($existingHash -eq $expectedSha256)
+            } catch {
+                $existingFileIsValid = $false
+            }
+        }
+
+        if ($existingFileIsValid) {
+            Write-GuiLog "OPAutoClicker 4.1 já existe no caminho fixo e passou na validação SHA-256. Reparando atalhos..." "INFO"
+        } else {
+            Set-GuiStatus "Baixando OPAutoClicker 4.1..." 95
+            Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
+            $headers = @{ "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $tempFile -Headers $headers -UseBasicParsing -MaximumRedirection 10 -ErrorAction Stop
+
+            if (-not (Test-Path $tempFile) -or (Get-Item $tempFile).Length -lt 100KB) {
+                throw "O arquivo baixado é inválido ou muito pequeno."
+            }
+
+            $actualSha256 = (Get-FileHash -Path $tempFile -Algorithm SHA256 -ErrorAction Stop).Hash.ToUpperInvariant()
+            if ($actualSha256 -ne $expectedSha256) {
+                throw "SHA-256 inválido. Esperado: $expectedSha256 | Obtido: $actualSha256"
+            }
+
+            Copy-Item -Path $tempFile -Destination $targetExe -Force -ErrorAction Stop
+        }
 
         New-OPAutoClickerShortcuts -TargetExe $targetExe | Out-Null
 
-        Write-GuiLog "OPAutoClicker 4.1 instalado pelo fallback portátil e validado por SHA-256." "SUCCESS"
+        Write-GuiLog "OPAutoClicker 4.1 instalado e validado por SHA-256." "SUCCESS"
         return $true
     } catch {
-        Write-GuiLog "Falha no fallback portátil do OPAutoClicker: $_" "ERROR"
+        Write-GuiLog "Falha ao instalar OPAutoClicker 4.1: $_" "ERROR"
         return $false
     } finally {
         Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
@@ -3621,7 +3639,9 @@ function Install-SelectedApps {
     if ($selectedApps.Count -eq 0) { return $true }
 
     # Verificação inteligente de integridade do WinGet
-    $requiresWinget = ($selectedApps | Where-Object { -not $_.DownloadUrl }).Count -gt 0
+    $requiresWinget = ($selectedApps | Where-Object {
+        -not $_.DownloadUrl -and $_.Id -ne "OPAutoClicker.OPAutoClicker"
+    }).Count -gt 0
     if ($requiresWinget) {
         if (-not (Test-WinGetFunctional)) {
             Write-GuiLog "⚠️ WinGet não detectado ou inoperante. Iniciando rotina de reparo automático..." "WARN"
@@ -3647,6 +3667,18 @@ function Install-SelectedApps {
         $curr++
         $percent = [math]::Round(($curr / $total) * 100)
         Set-GuiStatus "Instalando [$curr de $total]: $($app.Name)..." $percent
+
+        # O OPAutoClicker é portátil. Usamos um caminho fixo para que o executável
+        # e os atalhos fiquem sempre fáceis de localizar, independentemente do WinGet.
+        if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
+            if (Install-OPAutoClickerPortable) {
+                $successCount++
+            } else {
+                $failureCount++
+            }
+            Pump-GuiEvents
+            continue
+        }
 
         # Tratamento especial para aplicativos com instalador direto oficial (ExitLag, NVIDIA App, AMD Software)
         if ($app.DownloadUrl) {
@@ -3716,26 +3748,12 @@ function Install-SelectedApps {
             if ($exitCode -eq 0) {
                 $successCount++
                 Write-GuiLog "$($app.Name) instalado com sucesso!" "SUCCESS"
-                if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
-                    New-OPAutoClickerShortcuts | Out-Null
-                }
             } elseif ($exitCode -eq -1978335189 -or $exitCode -eq 2316632107) {
                 $successCount++
                 Write-GuiLog "$($app.Name) já se encontra na versão mais recente." "SUCCESS"
-                if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
-                    New-OPAutoClickerShortcuts | Out-Null
-                }
             } elseif ($exitCode -eq -1978335123 -or $exitCode -eq 2316632173) {
-                if ($app.Id -eq "OPAutoClicker.OPAutoClicker") {
-                    if (Install-OPAutoClickerPortableFallback) {
-                        $successCount++
-                    } else {
-                        $failureCount++
-                    }
-                } else {
-                    $failureCount++
-                    Write-GuiLog "Falha ao instalar $($app.Name): WinGet retornou 0x8A15006D (serviço necessário ocupado ou indisponível). Tente novamente em alguns instantes." "ERROR"
-                }
+                $failureCount++
+                Write-GuiLog "Falha ao instalar $($app.Name): WinGet retornou 0x8A15006D (serviço necessário ocupado ou indisponível). Tente novamente em alguns instantes." "ERROR"
             } elseif ($null -eq $exitCode) {
                 $failureCount++
                 Write-GuiLog "Falha ao instalar $($app.Name): não foi possível obter o ExitCode do processo WinGet." "ERROR"
